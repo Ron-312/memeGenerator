@@ -1,3 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+/* html {
+    font-family: play, serif;
+    color: #626262;
+} */
+
+body {
+    margin: 0;
+}
+
+/* helpers */
+
+.flex {
+    display: flex;
+}
+
+.flex.space-between {
+    justify-content: space-between;
+}
+
+.flex.align-center {
+    align-items: center;
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+.flex.direction-col {
+    flex-direction: column;
+}
+
 /* images grid */
 
 .grid {
@@ -12,4 +47,11 @@
     object-fit: cover;
     grid-row: span 5;
     grid-column: span 3;
+}
+
+/* modal */
+.canvas-container {
+    /* position: absolute; */
+    width: 100vw;
+    height: 100vh;
 }

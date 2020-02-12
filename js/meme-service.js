@@ -19,6 +19,7 @@ var gMeme = {
         }
     ]
 }
+var gImgIndex = -Infinity
 
 // imgs
 
@@ -29,4 +30,13 @@ function createImgs() {
 
 function getImgsToShow() {
     return gImgs
+}
+
+function saveCurrImgToService(currImg) {
+    debugger
+    gImgIndex = (currImg.classList.value)
+    gImgIndex = +(gImgIndex.split("-"))[1] - 1
+}
+function getCurrImgFromService() {
+    return gImgs[gImgIndex].url
 }

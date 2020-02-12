@@ -9,13 +9,22 @@
 </head>
 
 <body onload="onInit()">
-    <nav></nav>
+    <nav class="main-nav"></nav>
     <div class="main-container">
-            <div class="imgs images-wrapper grid">
-            </div>
-            <div class="canvas-container modal" hidden>
+        <div class="imgs images-wrapper grid">
+        </div>
+        <div class="modal flex space-between" >
+            <div class="canvas-container">
                 <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;"></canvas>
             </div>
+            <div class="modal-inputs" onchange="onChangeText()">
+            <input type="text">
+            <button>+</button><button>-</button>
+            <button class="share">share</button>
+        </div>
+        </div>
+
+                
     </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
