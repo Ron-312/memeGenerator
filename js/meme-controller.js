@@ -11,6 +11,9 @@ var gLines;
 
 var elTexts = [document.querySelector('.text-1'), document.querySelector('.text-2')]
 var gSelectedTextIndx = 0;
+// touch variables
+var gIsClicked = false;
+var gXy = [];
 
 function onInit() {
     gImgs = getImgsToShow();
@@ -18,7 +21,7 @@ function onInit() {
     gCtx = gCanvas.getContext('2d');
     addEventListeners()
     renderImgs();
-   
+
     // TODO : addEventListeners() for fluid sensitivity
 }
 function renderImgs() {
@@ -39,7 +42,8 @@ function resizeCanvas() {
 function openMemeEditor(currImg) {
     var elContainer = document.querySelector('.grid-modal');
     elContainer.style.display = 'grid'
-    document.querySelector('.imgs').style.display ='none'
+    document.querySelector('.imgs').style.display = 'none'
+    document.querySelector('.search-bar').style.display = 'none'
     resizeCanvas();
     saveCurrImgToService(currImg)
     printImgOnCanvas();
@@ -102,9 +106,25 @@ function drawRect(x, y, isSelected) {
 
 function addEventListeners() {
     gCanvas.addEventListener('mousedown', e => {
-        let xy = [e.clientX, e.clientY];
-        sendCoordsToModel(xy)
+        gXy = [e.clientX, e.clientY];
+        var index = selectTextByCoord(gXy)
+        changeTextIndx(index)
         printImgOnCanvas()
+        gIsClicked = true;
+
+    });
+    gCanvas.addEventListener('mousemove', e => {
+        let xy = [e.clientX, e.clientY];
+        let moveXy = [xy[0] - gXy[0], xy[1] - gXy[1]]
+        if (gIsClicked) {
+            sendCoordsToModel(moveXy)
+            printImgOnCanvas()
+            gXy = xy
+        }
+    });
+
+    window.addEventListener('mouseup', e => {
+        gIsClicked = false
     });
 }
 

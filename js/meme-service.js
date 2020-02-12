@@ -74,7 +74,9 @@ function getModelText(idx) {
     return gMeme.lines[idx].txt
 }
 function sendCoordsToModel(xy) {
-    gMeme.lines[gMeme.selectedLineIdx].xy = xy;
+    let currXy = gMeme.lines[gMeme.selectedLineIdx].xy;
+    currXy[0] = currXy[0] + xy[0]
+    currXy[1] = currXy[1] + xy[1]
 }
 function getLines() {
     return gMeme.lines
@@ -85,6 +87,16 @@ function getLines() {
 function changeFontSize(num) {
     gMeme.lines[gMeme.selectedLineIdx].size += num
 }
-function moveText(num){
+function moveText(num) {
     gMeme.lines[gMeme.selectedLineIdx].xy[1] += num
+}
+function selectTextByCoord(xy) {
+    var temp = gMeme.lines.findIndex((line, idx) => {
+        if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 100)) {
+            changeModalTextIndx(idx)
+            return true
+        }
+    }
+    )
+    return temp;
 }
