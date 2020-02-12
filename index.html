@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onload="onInit()">
     <nav></nav>
     <div class="main-container">
             <div class="imgs images-wrapper grid">
             </div>
-        <div class="modal">
-            <div class="meme-container"></div>
-
-        </div>
+            <div class="canvas-container modal" hidden>
+                <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;"></canvas>
+            </div>
     </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
