@@ -9,7 +9,13 @@
 </head>
 
 <body onload="onInit()">
-    <nav class="main-nav"></nav>
+    <nav class="main-nav flex space-between">
+        <div class="logo flex align-center">MemeGen</div>
+        <div class="anchors flex align-center">
+            <a class="gallery">Gallery</a>
+            <a class="about">About</a>
+        </div>
+    </nav>
     <div class="main-container">
         <div class="imgs images-wrapper grid">
         </div>
@@ -19,6 +25,7 @@
             </div>
             <div class="modal-inputs" onchange="onChangeText()">
             <input class="text1" type="text">
+            <input class="text2" type="text">
             <button>+</button><button>-</button>
             <button class="share">share</button>
         </div>

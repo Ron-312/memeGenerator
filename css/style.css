@@ -32,8 +32,24 @@ body {
 .flex.direction-col {
     flex-direction: column;
 }
+/* Nav */
+
+.main-nav{
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+    width: 100vw;
+    height: 66px;
+    background-color: #ff7f00;
+}
+
 
 /* images grid */
+
+.imgs{
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
 .grid {
     display: grid;
@@ -47,6 +63,7 @@ body {
     object-fit: cover;
     grid-row: span 5;
     grid-column: span 3;
+    border-radius: 10px;
 }
 
 /* modal */
