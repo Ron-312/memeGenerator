@@ -10,28 +10,49 @@
 
 <body onload="onInit()">
     <nav class="main-nav flex space-between">
-        <div class="logo flex align-center">MemeGen</div>
-        <div class="anchors flex align-center">
+        <div class="logo flex align-center"><img src="icons\layer-2.png" alt=""></div>
+        <div class="anchors flex align-center justify-center">
             <a class="gallery">Gallery</a>
             <a class="about">About</a>
         </div>
     </nav>
+    <div class="search-bar flex align-center">
+        <input type="text" placeholder="Enter Search Keyword">
+        <div class="search-keywords"></div>
+    </div>
     <div class="main-container">
         <div class="imgs images-wrapper grid">
         </div>
-        <div class="modal flex space-between" >
+        <div class="modal grid-modal">
             <div class="canvas-container">
                 <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;"></canvas>
             </div>
-            <div class="modal-inputs" onchange="onChangeText()">
-            <input class="text1" type="text">
-            <input class="text2" type="text">
-            <button>+</button><button>-</button>
-            <button class="share">share</button>
+            <div class="modal-inputs">
+                <input class="text-1" type="text" onclick="changeTextIndx(0)" oninput="onChangeText()">
+                <input class="text-2" type="text" onclick="changeTextIndx(1)" oninput="onChangeText()">
+                <button onclick="onChangeFontSize(2)"><img width="25px" height="25px"
+                        src="icons\increase font - icon.png" alt=""></button><button onclick="onChangeFontSize(-2)"><img
+                        width="25px" height="25px" src="icons\decrease font - icon.png" alt=""></button>
+                <button class="switch-line-btx" onclick="changeTextIndx()">Switch Line</button>
+                <button class="up-btx" onclick="onMoveText(-2)">Up</button>
+                <button class="down-btx" onclick="onMoveText(2)">Down</button>
+                <button class="share">share</button>
+            </div>
         </div>
+        <div class="info flex align-center">
+            <img src="" alt="this is me">
+            <div class="info-container flex direction-col">
+                <h2>Monica Geller</h2>
+                <p>is a fictional character, one of the six main characters who appears on the American sitcom Friends
+                    (1994–2004). Created by David Crane and Marta Kauffman</p>
+                <div class="links">facebook</div>
+            </div>
         </div>
+        <footer>
+            <div class="logo flex align-center">MemeGen</div>
+            <p>all rights reserved 2019</p>
+        </footer>
 
-                
     </div>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>

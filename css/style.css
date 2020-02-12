@@ -2,13 +2,35 @@
     box-sizing: border-box;
 }
 
-/* html {
-    font-family: play, serif;
-    color: #626262;
-} */
+/* Typography */
+
+@font-face {
+    font-family: monster;
+    src: url('../fonts/Montserrat-Regular.ttf');
+}
+
+html {
+    font-family: monster, sans-serif;
+    color: black;
+}
 
 body {
     margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+
+/* layout */
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    background-color: #e3e3e3;
+    /* padding-left: 10px;
+    padding-right: 10px; */
 }
 
 /* helpers */
@@ -32,21 +54,44 @@ body {
 .flex.direction-col {
     flex-direction: column;
 }
-/* Nav */
-
-.main-nav{
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 20px;
-    width: 100vw;
-    height: 66px;
-    background-color: #ff7f00;
+.flex.justify-center{
+    justify-content: center;
 }
 
+/* Nav */
+
+.main-nav {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100vw;
+    min-height: 4.2rem;
+    background-color: #ff7f00;
+    color: white;
+}
+.main-nav a{
+    font-size: 1.2;
+    height: 4.2rem ;
+    
+}
+.main-nav a:hover{
+color: black;
+border-bottom: 4px solid #040a2c;
+}
+/* search-bar */
+.search-bar{
+    background-color: white;
+    height: 6.4rem;
+}
+.search-bar input{
+    padding-right: ;
+background-color: none;
+border: none;
+border-bottom: 2px solid #040a2c;
+}
 
 /* images grid */
 
-.imgs{
+.imgs {
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -57,6 +102,7 @@ body {
     grid-auto-rows: 30px;
     gap: 20px;
 }
+
 .grid img {
     width: 100%;
     height: 100%;
@@ -67,8 +113,44 @@ body {
 }
 
 /* modal */
+
+.modal {
+    display: none;
+    width: 100vw;
+}
+
+.grid-modal {
+    display: none;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 50px);
+    /* grid-auto-rows: 30px; */
+    gap: 20px;
+}
+
 .canvas-container {
     /* position: absolute; */
-    width: 100vw;
-    height: 100vh;
+    margin-right: 0;
+    /* width: 30%; */
+    grid-row: span 10;
+    grid-column: span 5;
 }
+
+/* 
+#my-canvas {
+    grid-row: span 5;
+    grid-column: span 3;
+} */
+
+.modal-inputs {
+    grid-row: span 10;
+    grid-column: span 5;
+}
+
+/* info */
+.info{
+    background-color: #fff;
+}
+
+/* footer */
+footer{
+    background-color: #ff7f00;}

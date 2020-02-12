@@ -24,13 +24,13 @@ var gMeme = {
     lines: [
         {
             txt: 'I never eat Falafel',
-            size: 20,
+            size: 40,
             align: 'left',
             color: 'red',
             xy: [30, 70]
         }, {
             txt: 'but I eat Mafrum ',
-            size: 20,
+            size: 40,
             align: 'left',
             color: 'red',
             xy: [30, 200]
@@ -39,6 +39,9 @@ var gMeme = {
 }
 function getTextCoords() {
     return gMeme.lines[gMeme.selectedLineIdx].xy;
+}
+function changeModalTextIndx(idx) {
+    gMeme.selectedLineIdx = idx
 }
 // imgs
 
@@ -65,11 +68,23 @@ function getCurrImgFromService() {
 }
 function changeModelText(text, selectedTextIndx) {
     gMeme.lines[selectedTextIndx].txt = text
-    gMeme.selectedLineIdx = selectedTextIndx
+    // gMeme.selectedLineIdx = selectedTextIndx
 }
-function getModelText() {
-    return gMeme.lines[gMeme.selectedLineIdx].txt
+function getModelText(idx) {
+    return gMeme.lines[idx].txt
 }
 function sendCoordsToModel(xy) {
     gMeme.lines[gMeme.selectedLineIdx].xy = xy;
+}
+function getLines() {
+    return gMeme.lines
+}
+
+// ajusting text 
+
+function changeFontSize(num) {
+    gMeme.lines[gMeme.selectedLineIdx].size += num
+}
+function moveText(num){
+    gMeme.lines[gMeme.selectedLineIdx].xy[1] += num
 }

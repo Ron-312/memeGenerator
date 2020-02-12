@@ -4,12 +4,12 @@ var gImgs;
 // canvas variables
 var gCanvas;
 var gCtx;
+var gLines;
 // var gChangeCanvas = false;
 
 // text variables
 
-var elText1 = document.querySelector('.text1')
-var elText2 = document.querySelector('.text2')
+var elTexts = [document.querySelector('.text-1'), document.querySelector('.text-2')]
 var gSelectedTextIndx = 0;
 
 function onInit() {
@@ -18,7 +18,7 @@ function onInit() {
     gCtx = gCanvas.getContext('2d');
     addEventListeners()
     renderImgs();
-    resizeCanvas();
+   
     // TODO : addEventListeners() for fluid sensitivity
 }
 function renderImgs() {
@@ -37,8 +37,10 @@ function resizeCanvas() {
 }
 
 function openMemeEditor(currImg) {
-    var elContainer = document.querySelector('.canvas-container');
-    // elContainer.removeAttribute("hidden")
+    var elContainer = document.querySelector('.grid-modal');
+    elContainer.style.display = 'grid'
+    document.querySelector('.imgs').style.display ='none'
+    resizeCanvas();
     saveCurrImgToService(currImg)
     printImgOnCanvas();
 
@@ -50,11 +52,11 @@ function printImgOnCanvas() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
         // if (gChangeCanvas) {
-            drawRect()
-            drawText(elText1.value)
-
-            drawRect()
-            drawText(elText2.value)
+        gLines = getLines()
+        gLines.forEach((line, idx) => {
+            drawRect(line.xy[0], line.xy[1], (idx === gSelectedTextIndx))
+            drawText(elTexts[idx].value, line.xy[0], line.xy[1], idx)
+        })
         // } gChangeCanvas = true;
     }
 }
@@ -63,57 +65,56 @@ function onChangeText() {
     printImgOnCanvas()
 }
 
-function drawText(text , x, y) {
-    if(!text){
-        text = getModelText()
+function drawText(text, x, y, idx) {
+    if (!text) {
+        text = getModelText(idx)
     }
-    let txtCoords = getTextCoords()
     // gCtx.lineWidth = '2'
     // gCtx.strokeStyle = 'red'
     // gCtx.fillStyle = 'white'
-    gCtx.font = '40px Ariel'
+    gCtx.font = `${gLines[idx].size}px Ariel`
     // gCtx.textAlign = 'center'
-    gCtx.fillStyle = 'black'
-    gCtx.fillText(text, txtCoords[0], txtCoords[1])
-    gCtx.strokeText(text, txtCoords[0], txtCoords[1])
-    changeModelText(text,gSelectedTextIndx)
+    gCtx.fillStyle = gLines[idx].color
+    gCtx.fillText(text, x, y)
+    gCtx.strokeText(text, x, y)
+    changeModelText(text, idx)
 }
-function drawRect(x, y) {
-    let txtCoords = getTextCoords()
+function changeTextIndx(idx) {
+    if (!arguments.length && gSelectedTextIndx === 0) {
+        idx = 1
+    } else if (!arguments.length && gSelectedTextIndx === 1) {
+        idx = 0
+    }
+    gSelectedTextIndx = idx
+    changeModalTextIndx(idx)
+    printImgOnCanvas()
+}
+function drawRect(x, y, isSelected) {
+    // let txtCoords = getTextCoords()
     gCtx.beginPath()
-    gCtx.fillStyle = 'rgba(182, 182, 182, 0.699)'
-    gCtx.fillRect(0, txtCoords[1]-40, gCanvas.width, 100)
+    if (isSelected) {
+        gCtx.fillStyle = 'rgba(179, 28, 28, 0.671)'
+    } else {
+        gCtx.fillStyle = 'rgba(182, 182, 182, 0.699)'
+    }
+    gCtx.fillRect(0, y - 40, gCanvas.width, 100)
 }
 
 function addEventListeners() {
     gCanvas.addEventListener('mousedown', e => {
-        let xy = [e.clientX,e.clientY];
+        let xy = [e.clientX, e.clientY];
         sendCoordsToModel(xy)
         printImgOnCanvas()
     });
+}
 
-    // gCanvas.addEventListener('mousemove', e => {
-    //     if (isDrawing === true) {
-    //         console.log(e)
-    //         var mousex = e.pageX;
-    //         var mousey = e.pageY;
-    //         if (gLastMouseX > -1)
-    //             gMouseTravel = Math.max(Math.abs(mousex - gLastMouseX), Math.abs(mousey - gLastMouseY));
-    //         gLastMouseX = mousex;
-    //         gLastMouseY = mousey;
-    //         draw(x, y, e.clientX, e.clientY);
-    //         x = e.clientX;
-    //         y = e.clientY;
-    //     }
-    // });
+// ajusting text
 
-    // window.addEventListener('mouseup', e => {
-    //     if (isDrawing === true) {
-    //         resetMouseSpeed()
-    //         draw(x, y, e.clientX, e.clientY);
-    //         x = 0;
-    //         y = 0;
-    //         isDrawing = false;
-    //     }
-    // });
+function onChangeFontSize(num) {
+    changeFontSize(num)
+    printImgOnCanvas();
+}
+function onMoveText(num) {
+    moveText(num)
+    printImgOnCanvas()
 }
