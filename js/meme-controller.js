@@ -20,6 +20,7 @@ function onInit() {
     gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
+    createLines(gCanvas)
     addEventListeners()
     renderImgs();
     searchKeyWords()
@@ -46,6 +47,7 @@ function openMemeEditor(currImg) {
     elContainer.style.display = 'grid'
     document.querySelector('.imgs').style.display = 'none'
     document.querySelector('.search-bar').style.display = 'none'
+    document.querySelector('.info').style.display = 'none'
     resizeCanvas();
     saveCurrImgToService(currImg)
     printImgOnCanvas();
@@ -88,7 +90,7 @@ function drawText(text, x, y, idx) {
     }
     // gCtx.lineWidth = '2'
     gCtx.strokeStyle = gLines[idx].strokeColor
-    gCtx.font = `${gLines[idx].size}px Ariel`
+    gCtx.font = `${gLines[idx].size}px ${gLines[idx].fontFamily}`
     // gCtx.textAlign = 'left'
     gCtx.fillStyle = gLines[idx].color
     gCtx.fillText(text, x, y)
@@ -152,7 +154,7 @@ function onMoveText(num) {
     printImgOnCanvas()
 }
 function onAddLine() {
-    AddLine()
+    addLine()
     printImgOnCanvas()
 }
 function onAlign(whereTo) {
@@ -191,6 +193,15 @@ function onToTrash() {
 }
 function onDownload(elLink) {
     gForDowload = true
+    printImgOnCanvas()
+}
+function onChangeFontFamily() {
+    var fontValue = document.querySelector('.font-select').value
+    changeFontFamily(fontValue)
+    printImgOnCanvas()
+}
+function onAddEmoji(emoji) {
+    addEmoji(emoji)
     printImgOnCanvas()
 }
 
@@ -232,4 +243,15 @@ function searchKeyWords() {
 function changeSearch(searchText) {
     document.querySelector('.search-input').value = searchText
     onFilter()
+}
+
+function onReturnToGallery(){
+    var elContainer = document.querySelector('.grid-modal');
+    elContainer.style.display = 'none'
+    document.querySelector('.imgs').style.display = 'grid'
+    document.querySelector('.search-bar').style.display = 'flex'
+    document.querySelector('.info').style.display = 'flex'
+}
+function onToggleMenu() {
+    document.body.classList.toggle('menu-open');
 }

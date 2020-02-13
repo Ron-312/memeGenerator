@@ -6,20 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meme Generator</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/e265e61aaf.js" crossorigin="anonymous"></script>
 </head>
 
 <body onload="onInit()">
     <nav class="main-nav flex space-between">
         <div class="logo flex align-center"><img src="icons\layer-2.png" alt=""></div>
-        <div class="anchors flex align-center justify-center">
-            <a class="gallery">Gallery</a>
-            <a class="about">About</a>
+        <div class="nav-list anchors flex align-center justify-center">
+            <a onclick="onReturnToGallery()" class="gallery">Gallery</a><span class="line">|</span>
+            <a href="#info" class="about">About</a>
         </div>
+        <button class="menu-btn" onclick="onToggleMenu()">☰</button>
     </nav>
     <div class="search-bar flex align-center space-between">
         <input class="search-input" type="text" placeholder="Enter Search Keyword" oninput="onFilter()">
+        <i class="fas fa-search search-img"></i>
         <div class="search-keywords flex align-center space-between">
-            
+
         </div>
     </div>
     <div class="main-container">
@@ -29,41 +32,78 @@
             <div class="canvas-container">
                 <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;"></canvas>
             </div>
-            <div class="modal-inputs">
-                <input class="text-1" type="text"  oninput="onChangeText()">
-                <button onclick="onChangeFontSize(2)"><img src="icons\increase font - icon.png" alt=""></button>
-                <button onclick="onChangeFontSize(-2)"><img src="icons\decrease font - icon.png" alt=""></button>
-                <button class="switch-line-btn" onclick="changeTextIndx()"><img src="icons\up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
-                <button class="up-btn" onclick="onMoveText(-2)">Up</button>
-                <button class="down-btn" onclick="onMoveText(2)">Down</button>
-                <button class="add-btn" onclick="onAddLine()"><img src="C:\CodingAcademy\sprint2\memeGenerator\icons\add.png" alt=""></button>
-                <button class="align-left-btn" onclick="onAlign('left')"><img src="icons\align-to-left.png" alt=""></button>
-                <button class="align-right-btn" onclick="onAlign('right')"><img src="icons\align-to-right.png" alt=""></button>
-                <button class="align-center-btn" onclick="onAlign('center')"><img src="icons\center-text-alignment.png" alt=""></button>
-                <button class="trash-btn" onclick="onToTrash()"><img src="icons/trash.png" alt=""></button>
-                <button class="text-stroke-change-btn" onclick="onClickStrokeChange()" ><img src="icons\text stroke.png" alt=""></button>
-                <input class="stroke-change-color" type="color" onchange="onTextStrokeChange()" hidden>
-                <button class="text-fill-change-btn" onclick="onClickFillChange()" ><img src="icons\paint-board-and-brush.png" alt=""></button>
-                <input class="fill-change-color" type="color" onchange="onTextFillChange()" hidden>
-                <button class="share-btn">share</button> 
-                <a class="download-btn" onclick="onDownload(this)">Download</a>
-            </div>
-        </div>
-        <div class="info flex align-center">
-            <img src="" alt="this is me">
-            <div class="info-container flex direction-col">
-                <h2>Monica Geller</h2>
-                <p>is a fictional character, one of the six main characters who appears on the American sitcom Friends
-                    (1994–2004). Created by David Crane and Marta Kauffman</p>
-                <div class="links">facebook</div>
-            </div>
-        </div>
-        <footer>
-            <div class="logo flex align-center">MemeGen</div>
-            <p>all rights reserved 2019</p>
-        </footer>
+            <div class="modal-inputs flex direction-col">
+                <div class="flex align-center justify-center">
+                    <input class="text-1" type="text" oninput="onChangeText()">
 
+                </div>
+                <div class="flex align-center justify-center">
+                    <button class="switch-line-btn" onclick="changeTextIndx()"><img
+                            src="icons\up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
+                    <button class="add-btn" onclick="onAddLine()"><img
+                            src="C:\CodingAcademy\sprint2\memeGenerator\icons\add.png" alt=""></button>
+                    <button class="trash-btn" onclick="onToTrash()"><img src="icons/trash.png" alt=""></button>
+
+
+                </div >
+                <div class="flex align-center justify-center">
+                    <button onclick="onChangeFontSize(2)"><img src="icons\increase font - icon.png" alt=""></button>
+                    <button onclick="onChangeFontSize(-2)"><img src="icons\decrease font - icon.png" alt=""></button>
+                    <button class="align-left-btn" onclick="onAlign('left')"><img src="icons\align-to-left.png"
+                            alt=""></button>
+                    <button class="align-right-btn" onclick="onAlign('right')"><img src="icons\align-to-right.png"
+                            alt=""></button>
+                    <button class="align-center-btn" onclick="onAlign('center')"><img
+                            src="icons\center-text-alignment.png" alt=""></button>
+
+
+                </div>
+                <div class="flex align-center justify-center">
+                    <select class="font-select" onchange="onChangeFontFamily()" name="" id="">
+                        <option value="Ariel">Ariel</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="sans-serif">sans-serif</option>
+                    </select>
+                    <button class="text-stroke-change-btn" onclick="onClickStrokeChange()"><img
+                            src="icons\text stroke.png" alt=""></button>
+                    <input class="stroke-change-color" type="color" onchange="onTextStrokeChange()" hidden>
+                    <button class="text-fill-change-btn" onclick="onClickFillChange()"><img
+                            src="icons\paint-board-and-brush.png" alt=""></button>
+                    <input class="fill-change-color" type="color" onchange="onTextFillChange()" hidden>
+                </div>
+                <div class="flex align-center justify-center">
+                    <button onclick="onAddEmoji('🕶')">🕶️</button>
+
+                </div>
+                <div class="flex align-center justify-center">
+                    <button class="share-btn">Share</button>
+                   <button class="download-btn-container"><a class="download-btn" onclick="onDownload(this)">Download</a></button> 
+
+                </div>
+                <!-- <button class="up-btn" onclick="onMoveText(-2)">Up</button>
+                <button class="down-btn" onclick="onMoveText(2)">Down</button> -->
+            </div>
+        </div>
     </div>
+    <div id="info" class="info flex align-center">
+        <img class="face-img" src="icons\alina-kovalchuk-cd-7-d-yd-jki-kk-unsplash@3x.png" alt="this is me">
+        <div class="info-container flex direction-col">
+            <h2>Monica Geller</h2>
+            <p>is a fictional character, one of the six main characters who appears on the American sitcom Friends
+                (1994–2004). Created by David Crane and Marta Kauffman</p>
+            <div class="contact flex">
+                <div class="emot-container flex align-center  justify-center"><i class="fab fa-linkedin-in"></i></div>
+                <div class="emot-container  flex align-center  justify-center"><i class="fab fa-facebook-f"></i></div>
+                <div class="emot-container  flex align-center justify-center"><i class="fab fa-github"></i></div> 
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <footer class="flex align-center justify-center direction-col">
+        <div class="logo flex align-center"><img src="icons\layer-2.png" alt=""></div>
+        <p>all rights reserved 2019</p>
+    </footer>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>

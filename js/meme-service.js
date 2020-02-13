@@ -1,4 +1,5 @@
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
+var gMemeCanvas;
 
 var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
 { id: 2, url: 'imgs/2.jpg', keywords: ['animals'] },
@@ -16,28 +17,36 @@ var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
 { id: 14, url: 'imgs/14.jpg', keywords: ['matrix'] },
 { id: 15, url: 'imgs/15.jpg', keywords: ['happy'] },
 { id: 16, url: 'imgs/16.jpg', keywords: ['happy', 'you!'] },
+{ id: 17, url: 'imgs/17.jpg', keywords: ['president', 'you!'] },
+{ id: 18, url: 'imgs/18.jpg', keywords: ['you!'] },
 ];
 
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
-    lines: [
+    lines: []
+}
+function createLines(canvas) {
+    gMemeCanvas = canvas
+    var lines = [
         {
             txt: 'I never eat Falafel',
+            fontFamily: 'Ariel',
             size: 40,
             align: 'left',
             color: 'red',
-            strokeColor :'black',
+            strokeColor: 'black',
             xy: [30, 70]
         }, {
             txt: 'but I eat Mafrum ',
+            fontFamily: 'Ariel',
             size: 40,
             align: 'left',
             color: 'red',
-            strokeColor :'black',
-            xy: [30, 200]
-        }
-    ]
+            strokeColor: 'black',
+            xy: [30, canvas.height - 70]
+        }];
+    gMeme.lines = lines
 }
 function getTextCoords() {
     return gMeme.lines[gMeme.selectedLineIdx].xy;
@@ -47,15 +56,15 @@ function changeModalTextIndx(idx) {
 }
 // imgs
 
-function createImgs() {
-    // TODO: get imgs for gImgs from folder
-    for (let x = 0; x < 18; x++) {
-        gImgs.push(createImg())
-    }
-}
-function createImg() {
-    var img = {}
-}
+// function createImgs() {
+//     // TODO: get imgs for gImgs from folder
+//     for (let x = 0; x < 18; x++) {
+//         gImgs.push(createImg())
+//     }
+// }
+// function createImg() {
+//     var img = {}
+// }
 
 function getImgsToShow(filterBy) {
     if (!arguments.length) return gImgs
@@ -112,21 +121,34 @@ function selectTextByCoord(xy) {
     )
     return selectedTextIndx;
 }
-function AddLine() {
+function addLine() {
     let newLine = {
         txt: 'new line',
+        fontFamily: 'Ariel',
         size: 40,
         align: 'left',
         color: 'red',
-        strokeColor :'black',
-        xy: [30, 100]
+        strokeColor: 'black',
+        xy: [30, gMemeCanvas / 2]
     }
     gMeme.lines.push(newLine)
+}
+function addEmoji(emoji) {
+    let newEmoji = {
+        txt: emoji,
+        fontFamily: 'Ariel',
+        size: 40,
+        align: 'left',
+        color: 'red',
+        strokeColor: 'black',
+        xy: [30, 100]
+    }
+    gMeme.lines.push(newEmoji)
 }
 
 function alignRight(canvasWidth) {
     gMeme.lines.forEach(line => {
-        line.xy[0] = canvasWidth - 30;
+        line.xy[0] = canvasWidth - 100;
     })
 }
 
@@ -137,15 +159,18 @@ function alignLeft(canvasWidth) {
 }
 function alignCenter(canvasWidth) {
     gMeme.lines.forEach(line => {
-        line.xy[0] = canvasWidth/2;
+        line.xy[0] = canvasWidth / 2;
     })
 }
-function changeTextStrokeChange(strokeColor){
+function changeTextStrokeChange(strokeColor) {
     gMeme.lines[gMeme.selectedLineIdx].strokeColor = strokeColor
 }
-function changeTextFillChange(fillColor){
+function changeTextFillChange(fillColor) {
     gMeme.lines[gMeme.selectedLineIdx].color = fillColor
 }
-function toTrash(){
-gMeme.lines.splice(gMeme.selectedLineIdx,1)
+function toTrash() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+}
+function changeFontFamily(fontValue) {
+    gMeme.lines[gMeme.selectedLineIdx].fontFamily = fontValue;
 }
