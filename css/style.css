@@ -41,6 +41,9 @@ button {
 a {
     text-decoration: none;
 }
+a:hover{
+    cursor: pointer;
+}
 
 a:visited {
     color: white;
@@ -198,7 +201,7 @@ a:visited {
 
 .grid-modal {
     display: none;
-    grid-template-columns: repeat(10, minmax(50px, 1fr));
+    grid-template-columns: repeat(10, minmax(40px, 1fr));
     /* grid-template-rows: repeat(10, 50px); */
     grid-auto-rows: 30px;
     gap: 20px;
@@ -237,7 +240,6 @@ a:visited {
 }
 
 .modal-inputs input {
-    width: 23rem;
     height: 3.7rem;
     border-radius: 12px;
     font-size: 1.25rem;
@@ -327,6 +329,20 @@ footer p {
 .menu-btn{
     z-index: 2;
 }
+.toggle-menu-screen {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: rgba(231, 231, 231, 0.6);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    transition: opacity .5s;
+  }
 
 @media (max-width: 890px) {
     .grid {
@@ -360,15 +376,12 @@ footer p {
         grid-template-columns: repeat(6, minmax(60px, 300px));
         grid-auto-rows: 40px;
         gap: 20px;
-        /* flex-direction: column;         */
     }
     .face-img {
         grid-row: span 5;
         grid-column: span 10;
     }
     .info-container {
-        /* align-items: center;
-        justify-content: center; */
         grid-row: span 5;
         grid-column: span 10;
         margin-left: 10px;
@@ -383,12 +396,12 @@ footer p {
         right: 0;
         top: 0;
         height: 100vh;
-        background-color: rgba(255, 255, 255, 0.651);
-        border-left: 1px solid #d2d2d2;
+        background-color: rgba(235, 173, 80, 0.651); 
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0);
-        min-width: 100vw;
+        min-width: 20vw;
         transform: translate(100%, 0);
         transition: transform .8s, box-shadow .3s;
+        z-index: 2;
     }
     .menu-open .nav-list {
         transform: translate(0, 0);
@@ -397,4 +410,30 @@ footer p {
     .menu-btn{
         display: inline;
     }
+    
+    .toggle-menu-screen {
+        display: block;
+    }
+    
+    
+    .open .toggle-menu-screen {
+        visibility: visible;
+        opacity: 1;
+        z-index: 1;
+    }
+    .grid-modal {
+        display: none;
+        grid-template-columns: repeat(10, minmax(20px, 50px));
+        grid-template-rows: repeat(10, 50px);
+        /* grid-auto-rows: 30px; */
+        gap: 20px;
+    }
+    .canvas-container {
+        grid-row: span 10;
+        grid-column: span 9;
+    }
+    .modal-inputs{
+        grid-column: span 9;
+    }
+
 }

@@ -17,6 +17,7 @@
             <a href="#info" class="about">About</a>
         </div>
         <button class="menu-btn" onclick="onToggleMenu()">☰</button>
+        <div class="toggle-menu-screen screen" onclick="onToggleMenu()" alt="toggle main menu"></div>
     </nav>
     <div class="search-bar flex align-center space-between">
         <input class="search-input" type="text" placeholder="Enter Search Keyword" oninput="onFilter()">
@@ -78,10 +79,15 @@
                 <div class="flex align-center justify-center">
                     <button class="share-btn">Share</button>
                    <button class="download-btn-container"><a class="download-btn" onclick="onDownload(this)">Download</a></button> 
-
+                   <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                    <input name="img" id="imgData" type="hidden" />
+                    <button class="btn" type="submit">Publish</button>
+                    <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
+                    <div class="share-container"></div>
+                  </form>
+                  
                 </div>
-                <!-- <button class="up-btn" onclick="onMoveText(-2)">Up</button>
-                <button class="down-btn" onclick="onMoveText(2)">Down</button> -->
+                
             </div>
         </div>
     </div>

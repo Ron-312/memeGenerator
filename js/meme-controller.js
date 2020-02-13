@@ -254,4 +254,5 @@ function onReturnToGallery(){
 }
 function onToggleMenu() {
     document.body.classList.toggle('menu-open');
+    document.body.classList.toggle('open')
 }
