@@ -74,6 +74,7 @@ function printImgOnCanvas() {
                 var imgContent = gCanvas.toDataURL('image/jpeg');
                 document.querySelector('.download-btn').href = imgContent
                 document.querySelector('.download-btn').download = 'puki.jpg'
+                saveToMemeList(imgContent)
             }
         })
         // } gChangeCanvas = true;
@@ -245,14 +246,42 @@ function changeSearch(searchText) {
     onFilter()
 }
 
-function onReturnToGallery(){
+function onReturnToGallery() {
     var elContainer = document.querySelector('.grid-modal');
     elContainer.style.display = 'none'
     document.querySelector('.imgs').style.display = 'grid'
     document.querySelector('.search-bar').style.display = 'flex'
     document.querySelector('.info').style.display = 'flex'
+    document.querySelector('.savedMemes').style.display = 'none'
 }
 function onToggleMenu() {
     document.body.classList.toggle('menu-open');
     document.body.classList.toggle('open')
+}
+
+function saveToMemeList(imgContent) {
+    let localMemes = []
+    if (loadFromStorage('memes')) {
+        localMemes = loadFromStorage('memes')
+    }
+    localMemes.push(imgContent)
+    saveToStorage('memes', localMemes)
+}
+function onShowMemeList(){
+    var elContainer = document.querySelector('.grid-modal');
+    elContainer.style.display = 'none'
+    document.querySelector('.imgs').style.display = 'none'
+    document.querySelector('.search-bar').style.display = 'none'
+    document.querySelector('.info').style.display = 'none'
+    document.querySelector('.savedMemes').style.display = 'grid'
+    showMemeList()
+}
+function showMemeList() {
+    let elSavedMemes = document.querySelector('.savedMemes')
+    let strHTML = ''
+    let localMemes = loadFromStorage('memes')
+    localMemes.forEach(meme => {
+        strHTML += `<img class="memeImg" src="${meme}" alt="">`
+    });
+    elSavedMemes.innerHTML=strHTML;
 }

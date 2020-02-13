@@ -14,7 +14,8 @@
         <div class="logo flex align-center"><img src="icons\layer-2.png" alt=""></div>
         <div class="nav-list anchors flex align-center justify-center">
             <a onclick="onReturnToGallery()" class="gallery">Gallery</a><span class="line">|</span>
-            <a href="#info" class="about">About</a>
+            <a href="#info" onclick="onReturnToGallery()" class="about">About</a>
+            <a class="go-to-memes" onclick="onShowMemeList()">My Memes!</a>
         </div>
         <button class="menu-btn" onclick="onToggleMenu()">☰</button>
         <div class="toggle-menu-screen screen" onclick="onToggleMenu()" alt="toggle main menu"></div>
@@ -27,6 +28,9 @@
         </div>
     </div>
     <div class="main-container">
+        <div class="savedMemes grid">
+
+        </div>
         <div class="imgs images-wrapper grid">
         </div>
         <div class="modal grid-modal">
@@ -79,13 +83,13 @@
                 <div class="flex align-center justify-center">
                     <button class="share-btn">Share</button>
                    <button class="download-btn-container"><a class="download-btn" onclick="onDownload(this)">Download</a></button> 
-                   <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                   <!-- <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                     <input name="img" id="imgData" type="hidden" />
                     <button class="btn" type="submit">Publish</button>
                     <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
                     <div class="share-container"></div>
-                  </form>
-                  
+                  </form> -->
+
                 </div>
                 
             </div>
@@ -110,6 +114,8 @@
         <div class="logo flex align-center"><img src="icons\layer-2.png" alt=""></div>
         <p>all rights reserved 2019</p>
     </footer>
+
+    <script src="js/storage-service.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
 </body>

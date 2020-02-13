@@ -169,6 +169,13 @@ a:visited {
     cursor: grab;
 }
 
+
+/* saved memes grid */
+
+.savedMemes{
+    display: none;
+}
+
 /* images grid */
 
 .imgs {
