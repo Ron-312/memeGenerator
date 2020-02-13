@@ -1,21 +1,21 @@
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 
-var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['happy'] },
-{ id: 2, url: 'imgs/2.jpg', keywords: ['happy'] },
-{ id: 3, url: 'imgs/3.jpg', keywords: ['happy'] },
-{ id: 4, url: 'imgs/4.jpg', keywords: ['happy'] },
-{ id: 5, url: 'imgs/5.jpg', keywords: ['happy'] },
+var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
+{ id: 2, url: 'imgs/2.jpg', keywords: ['animals'] },
+{ id: 3, url: 'imgs/3.jpg', keywords: ['animals', 'baby'] },
+{ id: 4, url: 'imgs/4.jpg', keywords: ['animals'] },
+{ id: 5, url: 'imgs/5.jpg', keywords: ['happy', 'baby'] },
 { id: 6, url: 'imgs/6.jpg', keywords: ['happy'] },
-{ id: 7, url: 'imgs/7.jpg', keywords: ['happy'] },
+{ id: 7, url: 'imgs/7.jpg', keywords: ['happy', 'baby'] },
 { id: 8, url: 'imgs/8.jpg', keywords: ['happy'] },
-{ id: 9, url: 'imgs/9.jpg', keywords: ['happy'] },
-{ id: 10, url: 'imgs/10.jpg', keywords: ['happy'] },
-{ id: 11, url: 'imgs/11.jpg', keywords: ['happy'] },
-{ id: 12, url: 'imgs/12.jpg', keywords: ['happy'] },
-{ id: 13, url: 'imgs/13.jpg', keywords: ['happy'] },
-{ id: 14, url: 'imgs/14.jpg', keywords: ['happy'] },
+{ id: 9, url: 'imgs/9.jpg', keywords: ['happy', 'baby'] },
+{ id: 10, url: 'imgs/10.jpg', keywords: ['happy', 'president'] },
+{ id: 11, url: 'imgs/11.jpg', keywords: ['happy', 'kiss'] },
+{ id: 12, url: 'imgs/12.jpg', keywords: ['you!'] },
+{ id: 13, url: 'imgs/13.jpg', keywords: ['happy', 'you!'] },
+{ id: 14, url: 'imgs/14.jpg', keywords: ['matrix'] },
 { id: 15, url: 'imgs/15.jpg', keywords: ['happy'] },
-{ id: 16, url: 'imgs/16.jpg', keywords: ['happy'] },
+{ id: 16, url: 'imgs/16.jpg', keywords: ['happy', 'you!'] },
 ];
 
 var gMeme = {
@@ -55,8 +55,18 @@ function createImg() {
     var img = {}
 }
 
-function getImgsToShow() {
-    return gImgs
+function getImgsToShow(filterBy) {
+    if (!arguments.length) return gImgs
+    var res = gImgs.filter(img => {
+        let includeImg = false;
+        img.keywords.forEach(keyword => {
+            if (keyword.includes(filterBy)) {
+                includeImg = true;
+            }
+        });
+        return includeImg
+    })
+    return res
 }
 
 function saveCurrImgToService(currImg) {
@@ -91,12 +101,22 @@ function moveText(num) {
     gMeme.lines[gMeme.selectedLineIdx].xy[1] += num
 }
 function selectTextByCoord(xy) {
-    var temp = gMeme.lines.findIndex((line, idx) => {
+    let selectedTextIndx = gMeme.lines.findIndex((line, idx) => {
         if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 100)) {
             changeModalTextIndx(idx)
             return true
         }
     }
     )
-    return temp;
+    return selectedTextIndx;
+}
+function AddLine() {
+    let newLine = {
+        txt: 'new line',
+        size: 40,
+        align: 'left',
+        color: 'red',
+        xy: [30, 100]
+    }
+    gMeme.lines.push(newLine)
 }

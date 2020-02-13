@@ -16,9 +16,11 @@
             <a class="about">About</a>
         </div>
     </nav>
-    <div class="search-bar flex align-center">
-        <input type="text" placeholder="Enter Search Keyword">
-        <div class="search-keywords"></div>
+    <div class="search-bar flex align-center space-between">
+        <input class="search-input" type="text" placeholder="Enter Search Keyword" oninput="onFilter()">
+        <div class="search-keywords flex align-center space-between">
+            
+        </div>
     </div>
     <div class="main-container">
         <div class="imgs images-wrapper grid">
@@ -30,12 +32,12 @@
             <div class="modal-inputs">
                 <input class="text-1" type="text" onclick="changeTextIndx(0)" oninput="onChangeText()">
                 <input class="text-2" type="text" onclick="changeTextIndx(1)" oninput="onChangeText()">
-                <button onclick="onChangeFontSize(2)"><img width="25px" height="25px"
-                        src="icons\increase font - icon.png" alt=""></button><button onclick="onChangeFontSize(-2)"><img
-                        width="25px" height="25px" src="icons\decrease font - icon.png" alt=""></button>
+                <button onclick="onChangeFontSize(2)"><img src="icons\increase font - icon.png" alt=""></button>
+                <button onclick="onChangeFontSize(-2)"><img src="icons\decrease font - icon.png" alt=""></button>
                 <button class="switch-line-btx" onclick="changeTextIndx()">Switch Line</button>
                 <button class="up-btx" onclick="onMoveText(-2)">Up</button>
                 <button class="down-btx" onclick="onMoveText(2)">Down</button>
+                <button class="add-btx" onclick="onAddLine()"><img src="C:\CodingAcademy\sprint2\memeGenerator\icons\add.png" alt=""></button>
                 <button class="share">share</button>
             </div>
         </div>

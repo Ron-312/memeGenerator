@@ -1,5 +1,5 @@
 // imgs variables
-var gImgs;
+var gimgsController;
 
 // canvas variables
 var gCanvas;
@@ -16,19 +16,20 @@ var gIsClicked = false;
 var gXy = [];
 
 function onInit() {
-    gImgs = getImgsToShow();
+    gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     addEventListeners()
     renderImgs();
+    searchKeyWords()
 
     // TODO : addEventListeners() for fluid sensitivity
 }
 function renderImgs() {
     let elImgs = document.querySelector('.imgs');
     let strHTMLS = '';
-    gImgs.forEach((img, idx) => {
-        strHTMLS += `<img class="img img-${idx + 1}" src="imgs/${idx + 1}.jpg " alt="" onclick="openMemeEditor(this)"></img>`
+    gimgsController.forEach((img) => {
+        strHTMLS += `<img class="img img-${img.id}" src="imgs/${img.id}.jpg " alt="" onclick="openMemeEditor(this)"></img>`
     });
     elImgs.innerHTML = strHTMLS;
 }
@@ -137,4 +138,47 @@ function onChangeFontSize(num) {
 function onMoveText(num) {
     moveText(num)
     printImgOnCanvas()
+}
+function onAddLine(){
+    AddLine()
+    printImgOnCanvas()
+}
+
+// filte\search
+
+function onFilter() {
+    let filterBy = document.querySelector('.search-input').value
+    gimgsController = getImgsToShow(filterBy)
+    renderImgs()
+}
+function searchKeyWords() {
+    var searchKeyWords = [{keyword:'happy',numOfTimes: 0 }]
+    let newKeyword = ''
+    gimgsController.forEach(img => {
+        img.keywords.forEach(imgKeyword => {
+            let isInArr = searchKeyWords.find(keywordObj => {
+                if ((keywordObj.keyword === imgKeyword)) {
+                    keywordObj.numOfTimes++
+                    return true
+                }
+                else {
+                    newKeyword = imgKeyword
+                    return false }
+            })
+            if(!isInArr){
+                searchKeyWords.push({ keyword: newKeyword, numOfTimes: 1 });
+            }
+        })
+    })
+    let elSearchKeywords = document.querySelector('.search-keywords')
+    let strHTMLS = '';
+    searchKeyWords.forEach((keywordObj) => {
+        strHTMLS += `<a onclick="changeSearch('${keywordObj.keyword}')" style="font-size: ${(keywordObj.numOfTimes*1.5)+16}px;">${keywordObj.keyword}</a>`
+    });
+    elSearchKeywords.innerHTML = strHTMLS;
+}
+
+function changeSearch(searchText){
+    document.querySelector('.search-input').value = searchText
+    onFilter()
 }

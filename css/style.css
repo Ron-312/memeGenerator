@@ -54,7 +54,8 @@ h1, h2, h3, h4, h5, h6 {
 .flex.direction-col {
     flex-direction: column;
 }
-.flex.justify-center{
+
+.flex.justify-center {
     justify-content: center;
 }
 
@@ -68,24 +69,32 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #ff7f00;
     color: white;
 }
-.main-nav a{
+
+.main-nav a {
     font-size: 1.2;
-    height: 4.2rem ;
-    
+    height: 4.2rem;
 }
-.main-nav a:hover{
-color: black;
-border-bottom: 4px solid #040a2c;
+
+.main-nav a:hover {
+    color: black;
+    border-bottom: 4px solid #040a2c;
 }
+
 /* search-bar */
-.search-bar{
+
+.search-bar {
     background-color: white;
     height: 6.4rem;
 }
-.search-bar input{
-background-color: none;
-border: none;
-border-bottom: 2px solid #040a2c;
+
+.search-bar input {
+    background-color: none;
+    border: none;
+    border-bottom: 2px solid #040a2c;
+}
+
+.search-bar a {
+    padding-left: 10px;
 }
 
 /* images grid */
@@ -145,11 +154,19 @@ border-bottom: 2px solid #040a2c;
     grid-column: span 5;
 }
 
+.modal-inputs img {
+    width: 25px;
+    height: 25px
+}
+
 /* info */
-.info{
+
+.info {
     background-color: #fff;
 }
 
 /* footer */
-footer{
-    background-color: #ff7f00;}
+
+footer {
+    background-color: #ff7f00;
+}
