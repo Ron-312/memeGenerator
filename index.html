@@ -30,15 +30,23 @@
                 <canvas id="my-canvas" height="450" width="450" style="border: 1px solid black;"></canvas>
             </div>
             <div class="modal-inputs">
-                <input class="text-1" type="text" onclick="changeTextIndx(0)" oninput="onChangeText()">
-                <input class="text-2" type="text" onclick="changeTextIndx(1)" oninput="onChangeText()">
+                <input class="text-1" type="text"  oninput="onChangeText()">
                 <button onclick="onChangeFontSize(2)"><img src="icons\increase font - icon.png" alt=""></button>
                 <button onclick="onChangeFontSize(-2)"><img src="icons\decrease font - icon.png" alt=""></button>
-                <button class="switch-line-btx" onclick="changeTextIndx()">Switch Line</button>
-                <button class="up-btx" onclick="onMoveText(-2)">Up</button>
-                <button class="down-btx" onclick="onMoveText(2)">Down</button>
-                <button class="add-btx" onclick="onAddLine()"><img src="C:\CodingAcademy\sprint2\memeGenerator\icons\add.png" alt=""></button>
-                <button class="share">share</button>
+                <button class="switch-line-btn" onclick="changeTextIndx()"><img src="icons\up-and-down-opposite-double-arrows-side-by-side.png" alt=""></button>
+                <button class="up-btn" onclick="onMoveText(-2)">Up</button>
+                <button class="down-btn" onclick="onMoveText(2)">Down</button>
+                <button class="add-btn" onclick="onAddLine()"><img src="C:\CodingAcademy\sprint2\memeGenerator\icons\add.png" alt=""></button>
+                <button class="align-left-btn" onclick="onAlign('left')"><img src="icons\align-to-left.png" alt=""></button>
+                <button class="align-right-btn" onclick="onAlign('right')"><img src="icons\align-to-right.png" alt=""></button>
+                <button class="align-center-btn" onclick="onAlign('center')"><img src="icons\center-text-alignment.png" alt=""></button>
+                <button class="trash-btn" onclick="onToTrash()"><img src="icons/trash.png" alt=""></button>
+                <button class="text-stroke-change-btn" onclick="onClickStrokeChange()" ><img src="icons\text stroke.png" alt=""></button>
+                <input class="stroke-change-color" type="color" onchange="onTextStrokeChange()" hidden>
+                <button class="text-fill-change-btn" onclick="onClickFillChange()" ><img src="icons\paint-board-and-brush.png" alt=""></button>
+                <input class="fill-change-color" type="color" onchange="onTextFillChange()" hidden>
+                <button class="share-btn">share</button> 
+                <a class="download-btn" onclick="onDownload(this)">Download</a>
             </div>
         </div>
         <div class="info flex align-center">

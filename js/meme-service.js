@@ -27,12 +27,14 @@ var gMeme = {
             size: 40,
             align: 'left',
             color: 'red',
+            strokeColor :'black',
             xy: [30, 70]
         }, {
             txt: 'but I eat Mafrum ',
             size: 40,
             align: 'left',
             color: 'red',
+            strokeColor :'black',
             xy: [30, 200]
         }
     ]
@@ -116,7 +118,34 @@ function AddLine() {
         size: 40,
         align: 'left',
         color: 'red',
+        strokeColor :'black',
         xy: [30, 100]
     }
     gMeme.lines.push(newLine)
+}
+
+function alignRight(canvasWidth) {
+    gMeme.lines.forEach(line => {
+        line.xy[0] = canvasWidth - 30;
+    })
+}
+
+function alignLeft(canvasWidth) {
+    gMeme.lines.forEach(line => {
+        line.xy[0] = 0;
+    })
+}
+function alignCenter(canvasWidth) {
+    gMeme.lines.forEach(line => {
+        line.xy[0] = canvasWidth/2;
+    })
+}
+function changeTextStrokeChange(strokeColor){
+    gMeme.lines[gMeme.selectedLineIdx].strokeColor = strokeColor
+}
+function changeTextFillChange(fillColor){
+    gMeme.lines[gMeme.selectedLineIdx].color = fillColor
+}
+function toTrash(){
+gMeme.lines.splice(gMeme.selectedLineIdx,1)
 }

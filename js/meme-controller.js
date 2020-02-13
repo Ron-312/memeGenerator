@@ -5,11 +5,12 @@ var gimgsController;
 var gCanvas;
 var gCtx;
 var gLines;
+var gForDowload = false;
 // var gChangeCanvas = false;
 
 // text variables
 
-var elTexts = [document.querySelector('.text-1'), document.querySelector('.text-2')]
+var elText = document.querySelector('.text-1')
 var gSelectedTextIndx = 0;
 // touch variables
 var gIsClicked = false;
@@ -59,8 +60,19 @@ function printImgOnCanvas() {
         // if (gChangeCanvas) {
         gLines = getLines()
         gLines.forEach((line, idx) => {
-            drawRect(line.xy[0], line.xy[1], (idx === gSelectedTextIndx))
-            drawText(elTexts[idx].value, line.xy[0], line.xy[1], idx)
+            if (!gForDowload) {
+                drawRect(line.xy[0], line.xy[1], (idx === gSelectedTextIndx))
+            }
+            if (gSelectedTextIndx === idx) {
+                drawText(elText.value, line.xy[0], line.xy[1], idx)
+            } else {
+                drawText('', line.xy[0], line.xy[1], idx)
+            }
+            if (gForDowload) {
+                var imgContent = gCanvas.toDataURL('image/jpeg');
+                document.querySelector('.download-btn').href = imgContent
+                document.querySelector('.download-btn').download = 'puki.jpg'
+            }
         })
         // } gChangeCanvas = true;
     }
@@ -75,10 +87,9 @@ function drawText(text, x, y, idx) {
         text = getModelText(idx)
     }
     // gCtx.lineWidth = '2'
-    // gCtx.strokeStyle = 'red'
-    // gCtx.fillStyle = 'white'
+    gCtx.strokeStyle = gLines[idx].strokeColor
     gCtx.font = `${gLines[idx].size}px Ariel`
-    // gCtx.textAlign = 'center'
+    // gCtx.textAlign = 'left'
     gCtx.fillStyle = gLines[idx].color
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
@@ -110,6 +121,7 @@ function addEventListeners() {
         gXy = [e.clientX, e.clientY];
         var index = selectTextByCoord(gXy)
         changeTextIndx(index)
+        elText.value = getModelText(index)
         printImgOnCanvas()
         gIsClicked = true;
 
@@ -139,8 +151,46 @@ function onMoveText(num) {
     moveText(num)
     printImgOnCanvas()
 }
-function onAddLine(){
+function onAddLine() {
     AddLine()
+    printImgOnCanvas()
+}
+function onAlign(whereTo) {
+    let canvasWidth = gCanvas.width
+    if (whereTo === 'left') {
+        alignLeft(canvasWidth)
+    } else if (whereTo === 'right') {
+        alignRight(canvasWidth)
+    } else {
+        alignCenter(canvasWidth)
+    }
+    printImgOnCanvas()
+}
+function onClickStrokeChange() {
+    let elStrokeColorChange = document.querySelector('.stroke-change-color')
+    elStrokeColorChange.click()
+}
+function onTextStrokeChange() {
+    let strokeColor = document.querySelector('.stroke-change-color').value
+    changeTextStrokeChange(strokeColor)
+    printImgOnCanvas()
+}
+function onClickFillChange() {
+    let elFillColorChange = document.querySelector('.fill-change-color')
+    elFillColorChange.click()
+}
+function onTextFillChange() {
+    let fillColor = document.querySelector('.fill-change-color').value
+    changeTextFillChange(fillColor)
+    printImgOnCanvas()
+}
+
+function onToTrash() {
+    toTrash()
+    printImgOnCanvas()
+}
+function onDownload(elLink) {
+    gForDowload = true
     printImgOnCanvas()
 }
 
@@ -152,7 +202,7 @@ function onFilter() {
     renderImgs()
 }
 function searchKeyWords() {
-    var searchKeyWords = [{keyword:'happy',numOfTimes: 0 }]
+    var searchKeyWords = [{ keyword: 'happy', numOfTimes: 0 }]
     let newKeyword = ''
     gimgsController.forEach(img => {
         img.keywords.forEach(imgKeyword => {
@@ -163,9 +213,10 @@ function searchKeyWords() {
                 }
                 else {
                     newKeyword = imgKeyword
-                    return false }
+                    return false
+                }
             })
-            if(!isInArr){
+            if (!isInArr) {
                 searchKeyWords.push({ keyword: newKeyword, numOfTimes: 1 });
             }
         })
@@ -173,12 +224,12 @@ function searchKeyWords() {
     let elSearchKeywords = document.querySelector('.search-keywords')
     let strHTMLS = '';
     searchKeyWords.forEach((keywordObj) => {
-        strHTMLS += `<a onclick="changeSearch('${keywordObj.keyword}')" style="font-size: ${(keywordObj.numOfTimes*1.5)+16}px;">${keywordObj.keyword}</a>`
+        strHTMLS += `<a onclick="changeSearch('${keywordObj.keyword}')" style="font-size: ${(keywordObj.numOfTimes * 1.5) + 16}px;">${keywordObj.keyword}</a>`
     });
     elSearchKeywords.innerHTML = strHTMLS;
 }
 
-function changeSearch(searchText){
+function changeSearch(searchText) {
     document.querySelector('.search-input').value = searchText
     onFilter()
 }
