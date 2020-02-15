@@ -479,3 +479,17 @@ footer p {
         grid-column: span 9;
     }
 }
+@media (max-width: 615px){
+    .grid img {
+        grid-row: span 7;
+        grid-column: span 8;
+    }
+    .grid {
+        grid-template-columns: repeat(8, minmax(30px, 300px));
+    }
+    .info{
+        grid-template-columns: repeat(6, minmax(50px, 300px));
+        grid-auto-rows: 30px;
+        gap: 15px;
+    }
+}
