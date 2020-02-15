@@ -356,14 +356,24 @@ function showMemeList() {
 }
 
 function testHammer() {
-
-    const elBox = document.getElementById('#my-canvas')
+debugger
+    const elBox = document.getElementById('my-canvas')
     var hammerTime = new Hammer(elBox);
-    const elTxt = elBox.querySelector('h3')
     console.log('hammer ready');
-    hammerTime.on('panup pandown panleft panright tap doubletap press swipe', function (ev) {
-        elTxt.innerText = ev.type
-        console.log(ev);
+    hammerTime.on('press', function (ev) {
+        gXy = [ev.center.x, ev.center.x];
+        var pos = getMousePos(gCanvas, gXy);
+        gXy = pos
+        var index = selectTextByCoord(gXy)
+        changeTextIndx(index)
+        gElText.value = getModelText(index)
+        printImgOnCanvas()
+        gIsClicked = true;
+        console.log('pos', pos[0], pos[1])
+        console.log('ev type:',ev.type ,'ev',ev);
     });
+    // hammerTime.on('panup pandown panleft panright tap doubletap press swipe', function (ev) {
+    //     console.log('ev type:',ev.type ,'ev',ev);
+    // });
 }
 
