@@ -403,6 +403,16 @@ footer p {
     .search-input {
         margin-top: 10px;
     }
+    .info .face-img {
+        grid-row: span 5;
+        grid-column: span 10;
+        width: 14rem;
+        height: 14rem;
+        margin-top: 5.5rem;
+        margin-bottom: 6rem;
+        margin-left: 1.5rem;
+        justify-self: center;
+    }
 }
 
 @media (max-width: 650px) {
@@ -418,15 +428,7 @@ footer p {
     .search-keywords{
         width: 97vw;
     }
-    .face-img {
-        grid-row: span 5;
-        grid-column: span 10;
-        width: 15rem;
-        height: 15rem;
-        margin-top: 5.5rem;
-        margin-bottom: 6rem;
-        margin-left: 1.5rem;
-    }
+    
     .info-container {
         grid-row: span 5;
         grid-column: span 10;

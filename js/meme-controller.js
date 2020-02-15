@@ -21,10 +21,11 @@ function onInit() {
     gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-    createLines(gCanvas)
-    addEventListeners()
+    createLines(gCanvas);
+    addEventListeners();
     renderImgs();
-    searchKeyWords()
+    searchKeyWords();
+    testHammer();
 
     // TODO : addEventListeners() for fluid sensitivity
 }
@@ -251,10 +252,10 @@ function onSaveMeme() {
 function onloadSaveDownload() {
     var imgContent = gCanvas.toDataURL('image/jpeg');
     if (gForDowload) {
-       let elLink = document.querySelector('.imgHref');
-       elLink.href = imgContent
-       elLink.download = 'newMeme.jpg'
-       elLink.click();
+        let elLink = document.querySelector('.imgHref');
+        elLink.href = imgContent
+        elLink.download = 'newMeme.jpg'
+        elLink.click();
         gForDowload = false;
 
     }
@@ -353,3 +354,16 @@ function showMemeList() {
     });
     elSavedMemes.innerHTML = strHTML;
 }
+
+function testHammer() {
+
+    const elBox = document.getElementById('#my-canvas')
+    var hammerTime = new Hammer(elBox);
+    const elTxt = elBox.querySelector('h3')
+    console.log('hammer ready');
+    hammerTime.on('panup pandown panleft panright tap doubletap press swipe', function (ev) {
+        elTxt.innerText = ev.type
+        console.log(ev);
+    });
+}
+
