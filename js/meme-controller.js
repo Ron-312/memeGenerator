@@ -25,7 +25,6 @@ function onInit() {
     addEventListeners();
     renderImgs();
     searchKeyWords();
-    debugger
     testHammer();
 
     // TODO : addEventListeners() for fluid sensitivity
@@ -364,7 +363,8 @@ function testHammer() {
 
     const elBox = document.getElementById('my-canvas')
     var hammerTime = new Hammer(elBox);
-    hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
+    hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
+    // , threshold: 0
     console.log('hammer ready');
     hammerTime.on('pan', function (ev) {
         ev.preventDefault();
@@ -373,8 +373,9 @@ function testHammer() {
         // here, let's snag the current position
         // and keep track of the fact that we're dragging
         if (!isDragging) {
-            var bb = ev.target.getBoundingClientRect()
-            gXy = [ev.center.x -bb.left, ev.center.y-bb.top];
+            // var bb = ev.target.getBoundingClientRect()
+            // gXy = [ev.center.x -bb.left, ev.center.y-bb.top];
+            gXy = [ev.center.x, ev.center.y];
             var pos = getMousePos(gCanvas, gXy);
             gXy = pos
             isDragging = true;
@@ -387,10 +388,10 @@ function testHammer() {
             printImgOnCanvas()
             console.log('pos', pos[0], pos[1])
             console.log('ev type:', ev.type, 'ev', ev);
-            var posX = ev.deltaX + lastPosX;
-            var posY = ev.deltaY + lastPosY;
+            // var posX = ev.deltaX + lastPosX;
+            // var posY = ev.deltaY + lastPosY;
             // move our element to that position
-            let moveXy = [posX, posY]
+            let moveXy = [ev.deltaX, ev.deltaY]
                 sendCoordsToModel(moveXy)
                 printImgOnCanvas()
         }
