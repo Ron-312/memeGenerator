@@ -99,7 +99,7 @@ function getModelText(idx) {
 function sendCoordsToModel(xy) {
     if(gMeme.selectedLineIdx>=0){
         let currXy = gMeme.lines[gMeme.selectedLineIdx].xy;
-        currXy[0] = currXy[0] + xy[0]
+        currXy[0] =  currXy[0] + xy[0] 
         currXy[1] = currXy[1] + xy[1]
     }
 }

@@ -16,13 +16,14 @@ var gSelectedTextIndx = 0;
 // touch variables
 var gIsClicked = false;
 var gXy = [];
+var gDeltaForTouch =[0,0]
 
 function onInit() {
     gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     createLines(gCanvas);
-    addEventListeners();
+    // addEventListeners();
     renderImgs();
     searchKeyWords();
     testHammer();
@@ -162,6 +163,8 @@ function getMousePos(canvas, evt) {
 
 function addEventListeners() {
     gCanvas.addEventListener('mousedown', e => {
+        e.preventDefault();
+        e.stopPropagation();
         gXy = [e.clientX, e.clientY];
         var pos = getMousePos(gCanvas, gXy);
         gXy = pos
@@ -176,6 +179,8 @@ function addEventListeners() {
 
     });
     gCanvas.addEventListener('mousemove', e => {
+        e.preventDefault();
+        e.stopPropagation();
         let xy = [e.clientX, e.clientY];
         var pos = getMousePos(gCanvas, xy)
         xy = pos
@@ -188,6 +193,8 @@ function addEventListeners() {
     });
 
     window.addEventListener('mouseup', e => {
+        e.preventDefault();
+        e.stopPropagation();
         gIsClicked = false
     });
 }
@@ -241,7 +248,6 @@ function onToTrash() {
     printImgOnCanvas()
 }
 function onDownload() {
-    debugger
     gForDowload = true
     printImgOnCanvas()
 }
@@ -355,7 +361,7 @@ function showMemeList() {
     elSavedMemes.innerHTML = strHTML;
 }
 
-function testHammer() { 
+function testHammer() {
     var lastPosY = 0;
     var lastPosX = 0;
     var isDragging = false;
@@ -366,55 +372,46 @@ function testHammer() {
     hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
     // , threshold: 0
     console.log('hammer ready');
-    hammerTime.on('pan', function (ev) {
+   
+    hammerTime.on('panstart', function (ev) {
+        
         ev.preventDefault();
-        // for convience, let's get a reference to our object
-        // DRAG STARTED
-        // here, let's snag the current position
-        // and keep track of the fact that we're dragging
+        ev.srcEvent.stopPropagation();
         if (!isDragging) {
-            // var bb = ev.target.getBoundingClientRect()
-            // gXy = [ev.center.x -bb.left, ev.center.y-bb.top];
             gXy = [ev.center.x, ev.center.y];
             var pos = getMousePos(gCanvas, gXy);
             gXy = pos
             isDragging = true;
             lastPosX = pos[0];
             lastPosY = pos[1];
-            var textPose =[lastPosX,lastPosY]
+            var textPose = [lastPosX, lastPosY]
             var index = selectTextByCoord(textPose)
             changeTextIndx(index)
             gElText.value = getModelText(index)
             printImgOnCanvas()
-            console.log('pos', pos[0], pos[1])
-            console.log('ev type:', ev.type, 'ev', ev);
-            // var posX = ev.deltaX + lastPosX;
-            // var posY = ev.deltaY + lastPosY;
-            // move our element to that position
-            let moveXy = [ev.deltaX, ev.deltaY]
-                sendCoordsToModel(moveXy)
-                printImgOnCanvas()
         }
-        // we simply need to determine where the x,y of this
-        // object is relative to where it's "last" known position is
-        // NOTE: 
-        //    deltaX and deltaY are cumulative
-        // Thus we need to always calculate 'real x and y' relative
-        // to the "lastPosX/Y"
+    });
+    hammerTime.on('panmove', function (ev) {
+        ev.preventDefault();
+        ev.srcEvent.stopPropagation();
+        // let moveXy = [ev.center.x - gXy[0], ev.center.y - gXy[1]]
+        let moveXy = [ev.deltaX-gDeltaForTouch[0], ev.deltaY-gDeltaForTouch[1]]
+        console.log(ev);
+        
+        sendCoordsToModel(moveXy)
+        printImgOnCanvas()
+        gDeltaForTouch =[gDeltaForTouch[0]+moveXy[0],gDeltaForTouch[1]+moveXy[1]]
+    });
 
+    hammerTime.on('panend', function (ev) {
+        gDeltaForTouch =[0,0]
+        ev.preventDefault();
+        ev.srcEvent.stopPropagation();
         if (ev.isFinal) {
             isDragging = false;
         }
-
-        // gXy = [ev.center.x, ev.center.x];
-        // var pos = getMousePos(gCanvas, gXy);
-        // gXy = pos
     });
-    // poor choice here, but to keep it simple
-    // setting up a few vars to keep track of things.
-
-
-    }
+}
 
 
 
