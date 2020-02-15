@@ -360,7 +360,7 @@ debugger
     const elBox = document.getElementById('my-canvas')
     var hammerTime = new Hammer(elBox);
     console.log('hammer ready');
-    hammerTime.on('press', function (ev) {
+    hammerTime.on('tap', function (ev) {
         gXy = [ev.center.x, ev.center.x];
         var pos = getMousePos(gCanvas, gXy);
         gXy = pos
@@ -372,8 +372,19 @@ debugger
         console.log('pos', pos[0], pos[1])
         console.log('ev type:',ev.type ,'ev',ev);
     });
-    // hammerTime.on('panup pandown panleft panright tap doubletap press swipe', function (ev) {
-    //     console.log('ev type:',ev.type ,'ev',ev);
-    // });
+
+    hammerTime.on('panup pandown panleft panright', function (ev) {
+        let xy = [ev.center.x, ev.center.x];
+        var pos = getMousePos(gCanvas, xy)
+        xy = pos
+        let moveXy = [xy[0] - gXy[0], xy[1] - gXy[1]]
+        if (gIsClicked) {
+            sendCoordsToModel(moveXy)
+            printImgOnCanvas()
+            gXy = xy
+            console.log('ev type:',ev.type ,'ev',ev);
+        }
+    });
+
 }
 
