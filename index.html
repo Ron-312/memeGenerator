@@ -50,7 +50,7 @@
                     <button class="trash-btn" onclick="onToTrash()"><img src="icons/trash.png" alt=""></button>
 
 
-                </div >
+                </div>
                 <div class="flex align-center justify-center">
                     <button onclick="onChangeFontSize(2)"><img src="icons\increase font - icon.png" alt=""></button>
                     <button onclick="onChangeFontSize(-2)"><img src="icons\decrease font - icon.png" alt=""></button>
@@ -77,13 +77,14 @@
                     <input class="fill-change-color" type="color" onchange="onTextFillChange()" hidden>
                 </div>
                 <div class="flex align-center justify-center">
-                    <button onclick="onAddEmoji('🕶')">🕶️</button>
-
+                    <button onclick="onAddEmoji('icons/gangster-glasses-png-2-transparent.png')"><img src="icons\gangster-glasses-png-2-transparent.png" alt=""></button>
+                    <button onclick="onAddEmoji('icons/crown-transparent.png')"><img src="icons\crown-transparent.png" alt=""></button>
+                    <button onclick="onAddEmoji('icons/atrial-clip-blunt-1-transparent.png')"><img src="icons\atrial-clip-blunt-1-transparent.png" alt=""></button>
                 </div>
                 <div class="flex align-center justify-center">
                     <button class="share-btn">Share</button>
-                   <button class="download-btn-container"><a class="download-btn" onclick="onDownload(this)">Download</a></button> 
-                   <!-- <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
+                    <button class="save-btn" onclick="onSaveMeme()">Save</button>
+                    <!-- <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                     <input name="img" id="imgData" type="hidden" />
                     <button class="btn" type="submit">Publish</button>
                     <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a>
@@ -91,7 +92,11 @@
                   </form> -->
 
                 </div>
-                
+                <div class="flex align-center justify-center">
+                    <button class="download-btn-container download-btn " onclick="onDownload()">Download</button>
+                    <a onclick="" class="imgHref" href="" ></a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -104,7 +109,7 @@
             <div class="contact flex">
                 <div class="emot-container flex align-center  justify-center"><i class="fab fa-linkedin-in"></i></div>
                 <div class="emot-container  flex align-center  justify-center"><i class="fab fa-facebook-f"></i></div>
-                <div class="emot-container  flex align-center justify-center"><i class="fab fa-github"></i></div> 
+                <div class="emot-container  flex align-center justify-center"><i class="fab fa-github"></i></div>
             </div>
 
         </div>

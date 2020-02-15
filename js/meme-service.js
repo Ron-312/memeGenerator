@@ -24,7 +24,7 @@ var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
-    lines: []
+    lines: [],
 }
 function createLines(canvas) {
     gMemeCanvas = canvas
@@ -92,27 +92,45 @@ function changeModelText(text, selectedTextIndx) {
     // gMeme.selectedLineIdx = selectedTextIndx
 }
 function getModelText(idx) {
-    return gMeme.lines[idx].txt
+    if(idx>=0){
+        return gMeme.lines[idx].txt
+    }
 }
 function sendCoordsToModel(xy) {
-    let currXy = gMeme.lines[gMeme.selectedLineIdx].xy;
-    currXy[0] = currXy[0] + xy[0]
-    currXy[1] = currXy[1] + xy[1]
+    if(gMeme.selectedLineIdx>=0){
+        let currXy = gMeme.lines[gMeme.selectedLineIdx].xy;
+        currXy[0] = currXy[0] + xy[0]
+        currXy[1] = currXy[1] + xy[1]
+    }
 }
 function getLines() {
     return gMeme.lines
 }
 
+
 // ajusting text 
 
 function changeFontSize(num) {
-    gMeme.lines[gMeme.selectedLineIdx].size += num
+    if(gMeme.lines[gMeme.selectedLineIdx].fontFamily){
+        gMeme.lines[gMeme.selectedLineIdx].size += num
+
+    }else if(!gMeme.lines[gMeme.selectedLineIdx].fontFamily){
+        gMeme.lines[gMeme.selectedLineIdx].width += num
+        gMeme.lines[gMeme.selectedLineIdx].height += num
+    }
 }
 function moveText(num) {
     gMeme.lines[gMeme.selectedLineIdx].xy[1] += num
 }
 function selectTextByCoord(xy) {
     let selectedTextIndx = gMeme.lines.findIndex((line, idx) => {
+        if(!line.fontFamily){
+            if((xy[1] >= line.xy[1]) && (xy[1] <= (line.xy[1] + line.height)) && (xy[0]>=line.xy[0]) && (xy[0]<=line.xy[0]+line.width)){
+                changeModalTextIndx(idx)
+                return true
+            } 
+            return
+        }
         if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 100)) {
             changeModalTextIndx(idx)
             return true
@@ -129,38 +147,30 @@ function addLine() {
         align: 'left',
         color: 'red',
         strokeColor: 'black',
-        xy: [30, gMemeCanvas / 2]
+        xy: [30, (gMemeCanvas.height / 2)]
     }
     gMeme.lines.push(newLine)
 }
-function addEmoji(emoji) {
+function addEmoji(emojiUrl) {
     let newEmoji = {
-        txt: emoji,
-        fontFamily: 'Ariel',
-        size: 40,
-        align: 'left',
-        color: 'red',
-        strokeColor: 'black',
-        xy: [30, 100]
+        url: emojiUrl,
+        width: 40,
+        height:40,
+        xy: [30, gMemeCanvas.height / 2]
     }
     gMeme.lines.push(newEmoji)
 }
 
 function alignRight(canvasWidth) {
-    gMeme.lines.forEach(line => {
-        line.xy[0] = canvasWidth - 100;
-    })
+    gMeme.lines[gMeme.selectedLineIdx].xy[0] = canvasWidth - 100;
+
 }
 
 function alignLeft(canvasWidth) {
-    gMeme.lines.forEach(line => {
-        line.xy[0] = 0;
-    })
+    gMeme.lines[gMeme.selectedLineIdx].xy[0] = 0;
 }
 function alignCenter(canvasWidth) {
-    gMeme.lines.forEach(line => {
-        line.xy[0] = canvasWidth / 2;
-    })
+    gMeme.lines[gMeme.selectedLineIdx].xy[0] = canvasWidth / 2;
 }
 function changeTextStrokeChange(strokeColor) {
     gMeme.lines[gMeme.selectedLineIdx].strokeColor = strokeColor

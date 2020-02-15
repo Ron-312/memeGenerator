@@ -41,7 +41,8 @@ button {
 a {
     text-decoration: none;
 }
-a:hover{
+
+a:hover {
     cursor: pointer;
 }
 
@@ -126,9 +127,10 @@ a:visited {
 .main-nav .line {
     color: #8a8a8a;
 }
-.menu-btn{
+
+.menu-btn {
     display: none;
-    background-color:  #ffffff00;
+    background-color: #ffffff00;
     border: none;
     font-size: 3rem;
     color: white;
@@ -169,11 +171,22 @@ a:visited {
     cursor: grab;
 }
 
-
 /* saved memes grid */
 
-.savedMemes{
+.savedMemes {
     display: none;
+}
+
+.savedMemes.grid img {
+    grid-row: span 8;
+    grid-column: span 5;
+    object-fit: fill;
+}
+
+.savedMemes.grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(40px, 400px));
+    grid-auto-rows: 30px;
 }
 
 /* images grid */
@@ -193,8 +206,8 @@ a:visited {
 .grid img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    grid-row: span 5;
+    object-fit: fill;
+    grid-row: span 6;
     grid-column: span 3;
     border-radius: 10px;
 }
@@ -285,6 +298,20 @@ a:visited {
     color: white;
 }
 
+.modal-inputs .imgHref {
+    display: none;
+}
+
+.modal-inputs .save-btn {
+    width: 7.5rem;
+    height: 3.75rem;
+    border-radius: 12px;
+    background-color: #ff7f00;
+    box-shadow: none;
+    font-size: 1rem;
+    color: white;
+}
+
 /* info */
 
 .info {
@@ -332,10 +359,13 @@ footer {
 footer p {
     color: white;
 }
+
 /* menu hamburger */
-.menu-btn{
+
+.menu-btn {
     z-index: 2;
 }
+
 .toggle-menu-screen {
     display: none;
     position: fixed;
@@ -349,7 +379,7 @@ footer p {
     visibility: hidden;
     cursor: pointer;
     transition: opacity .5s;
-  }
+}
 
 @media (max-width: 890px) {
     .grid {
@@ -364,6 +394,7 @@ footer p {
         grid-template-columns: repeat(8, minmax(50px, 400px));
     }
     .grid img {
+        grid-row: span 7;
         grid-column: span 4;
     }
     .search-bar {
@@ -384,9 +415,17 @@ footer p {
         grid-auto-rows: 40px;
         gap: 20px;
     }
+    .search-keywords{
+        width: 97vw;
+    }
     .face-img {
         grid-row: span 5;
         grid-column: span 10;
+        width: 15rem;
+        height: 15rem;
+        margin-top: 5.5rem;
+        margin-bottom: 6rem;
+        margin-left: 1.5rem;
     }
     .info-container {
         grid-row: span 5;
@@ -403,7 +442,7 @@ footer p {
         right: 0;
         top: 0;
         height: 100vh;
-        background-color: rgba(235, 173, 80, 0.651); 
+        background-color: rgba(235, 173, 80, 0.651);
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0);
         min-width: 20vw;
         transform: translate(100%, 0);
@@ -414,15 +453,12 @@ footer p {
         transform: translate(0, 0);
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
     }
-    .menu-btn{
+    .menu-btn {
         display: inline;
     }
-    
     .toggle-menu-screen {
         display: block;
     }
-    
-    
     .open .toggle-menu-screen {
         visibility: visible;
         opacity: 1;
@@ -439,8 +475,7 @@ footer p {
         grid-row: span 10;
         grid-column: span 9;
     }
-    .modal-inputs{
+    .modal-inputs {
         grid-column: span 9;
     }
-
 }

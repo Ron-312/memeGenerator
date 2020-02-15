@@ -6,11 +6,12 @@ var gCanvas;
 var gCtx;
 var gLines;
 var gForDowload = false;
+var gForSave = false;
 // var gChangeCanvas = false;
 
 // text variables
 
-var elText = document.querySelector('.text-1')
+var gElText = document.querySelector('.text-1')
 var gSelectedTextIndx = 0;
 // touch variables
 var gIsClicked = false;
@@ -62,41 +63,31 @@ function printImgOnCanvas() {
         // if (gChangeCanvas) {
         gLines = getLines()
         gLines.forEach((line, idx) => {
-            if (!gForDowload) {
+            if (!line.fontFamily) {
+                return drawEmoji(line, idx)
+            }
+            if (!gForDowload && !gForSave) {
                 drawRect(line.xy[0], line.xy[1], (idx === gSelectedTextIndx))
             }
             if (gSelectedTextIndx === idx) {
-                drawText(elText.value, line.xy[0], line.xy[1], idx)
+                drawText(gElText.value, line.xy[0], line.xy[1], idx)
+                if (gLines.length - 1 === idx) {
+                    onloadSaveDownload()
+                }
             } else {
                 drawText('', line.xy[0], line.xy[1], idx)
-            }
-            if (gForDowload) {
-                var imgContent = gCanvas.toDataURL('image/jpeg');
-                document.querySelector('.download-btn').href = imgContent
-                document.querySelector('.download-btn').download = 'puki.jpg'
-                saveToMemeList(imgContent)
+                if (gLines.length - 1 === idx) {
+                    onloadSaveDownload()
+                }
             }
         })
+
         // } gChangeCanvas = true;
     }
 }
 
 function onChangeText() {
     printImgOnCanvas()
-}
-
-function drawText(text, x, y, idx) {
-    if (!text) {
-        text = getModelText(idx)
-    }
-    // gCtx.lineWidth = '2'
-    gCtx.strokeStyle = gLines[idx].strokeColor
-    gCtx.font = `${gLines[idx].size}px ${gLines[idx].fontFamily}`
-    // gCtx.textAlign = 'left'
-    gCtx.fillStyle = gLines[idx].color
-    gCtx.fillText(text, x, y)
-    gCtx.strokeText(text, x, y)
-    changeModelText(text, idx)
 }
 function changeTextIndx(idx) {
     if (!arguments.length && gSelectedTextIndx === 0) {
@@ -108,8 +99,20 @@ function changeTextIndx(idx) {
     changeModalTextIndx(idx)
     printImgOnCanvas()
 }
+
+// draw
+function drawText(text, x, y, idx) {
+    if (!text) {
+        text = getModelText(idx)
+    }
+    gCtx.strokeStyle = gLines[idx].strokeColor
+    gCtx.font = `${gLines[idx].size}px ${gLines[idx].fontFamily}`
+    gCtx.fillStyle = gLines[idx].color
+    gCtx.fillText(text, x, y)
+    gCtx.strokeText(text, x, y)
+    changeModelText(text, idx)
+}
 function drawRect(x, y, isSelected) {
-    // let txtCoords = getTextCoords()
     gCtx.beginPath()
     if (isSelected) {
         gCtx.fillStyle = 'rgba(179, 28, 28, 0.671)'
@@ -119,18 +122,62 @@ function drawRect(x, y, isSelected) {
     gCtx.fillRect(0, y - 40, gCanvas.width, 100)
 }
 
+
+function drawEmoji(currEmoji, idx) {
+    var img = new Image()
+    img.src = currEmoji.url;
+    let spriteW = currEmoji.width, spriteH = currEmoji.height;
+    let spriteX = currEmoji.xy[0], spriteY = currEmoji.xy[1];
+    img.onload = (() => {
+        // gCtx.drawImage(img, 0, 0);
+        gCtx.drawImage(img, 0, 0, img.width, img.height, spriteX, spriteY, spriteW, spriteH);
+        if (gLines.length - 1 === idx) {
+            onloadSaveDownload()
+        }
+
+        // gCtx.drawImage(img,
+        //     // source rectangle
+        //     0, 0, spriteW, spriteH,
+        //     // destination rectangle
+        //     spriteX, spriteY, spriteW, spriteH);
+    });
+
+
+}
+
+
+// event listeners
+
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect(), // abs. size of element
+        scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
+        scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
+
+    return [((evt[0] - rect.left) * scaleX), ((evt[1] - rect.top) * scaleY)]
+    //   x: (evt[0] - rect.left) * scaleX,   // scale mouse coordinates after they have
+    //   y: (evt[1] - rect.top) * scaleY     // been adjusted to be relative to element
+
+}
+
 function addEventListeners() {
     gCanvas.addEventListener('mousedown', e => {
         gXy = [e.clientX, e.clientY];
+        var pos = getMousePos(gCanvas, gXy);
+        gXy = pos
         var index = selectTextByCoord(gXy)
         changeTextIndx(index)
-        elText.value = getModelText(index)
+        gElText.value = getModelText(index)
         printImgOnCanvas()
         gIsClicked = true;
+        console.log('regular', e.clientX, e.clientY);
+        console.log('pos', pos[0], pos[1])
+
 
     });
     gCanvas.addEventListener('mousemove', e => {
         let xy = [e.clientX, e.clientY];
+        var pos = getMousePos(gCanvas, xy)
+        xy = pos
         let moveXy = [xy[0] - gXy[0], xy[1] - gXy[1]]
         if (gIsClicked) {
             sendCoordsToModel(moveXy)
@@ -192,17 +239,37 @@ function onToTrash() {
     toTrash()
     printImgOnCanvas()
 }
-function onDownload(elLink) {
+function onDownload() {
+    debugger
     gForDowload = true
     printImgOnCanvas()
+}
+function onSaveMeme() {
+    gForSave = true
+    printImgOnCanvas()
+}
+function onloadSaveDownload() {
+    var imgContent = gCanvas.toDataURL('image/jpeg');
+    if (gForDowload) {
+       let elLink = document.querySelector('.imgHref');
+       elLink.href = imgContent
+       elLink.download = 'newMeme.jpg'
+       elLink.click();
+        gForDowload = false;
+
+    }
+    if (gForSave) {
+        saveToMemeList(imgContent)
+        gForSave = false;
+    }
 }
 function onChangeFontFamily() {
     var fontValue = document.querySelector('.font-select').value
     changeFontFamily(fontValue)
     printImgOnCanvas()
 }
-function onAddEmoji(emoji) {
-    addEmoji(emoji)
+function onAddEmoji(emojiUrl) {
+    addEmoji(emojiUrl)
     printImgOnCanvas()
 }
 
@@ -253,6 +320,7 @@ function onReturnToGallery() {
     document.querySelector('.search-bar').style.display = 'flex'
     document.querySelector('.info').style.display = 'flex'
     document.querySelector('.savedMemes').style.display = 'none'
+    createLines(gCanvas)
 }
 function onToggleMenu() {
     document.body.classList.toggle('menu-open');
@@ -267,7 +335,7 @@ function saveToMemeList(imgContent) {
     localMemes.push(imgContent)
     saveToStorage('memes', localMemes)
 }
-function onShowMemeList(){
+function onShowMemeList() {
     var elContainer = document.querySelector('.grid-modal');
     elContainer.style.display = 'none'
     document.querySelector('.imgs').style.display = 'none'
@@ -283,5 +351,5 @@ function showMemeList() {
     localMemes.forEach(meme => {
         strHTML += `<img class="memeImg" src="${meme}" alt="">`
     });
-    elSavedMemes.innerHTML=strHTML;
+    elSavedMemes.innerHTML = strHTML;
 }
