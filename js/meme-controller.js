@@ -25,6 +25,7 @@ function onInit() {
     addEventListeners();
     renderImgs();
     searchKeyWords();
+    debugger
     testHammer();
 
     // TODO : addEventListeners() for fluid sensitivity
@@ -355,36 +356,65 @@ function showMemeList() {
     elSavedMemes.innerHTML = strHTML;
 }
 
-function testHammer() {
-debugger
+function testHammer() { 
+    var lastPosY = 0;
+    var lastPosX = 0;
+    var isDragging = false;
+
+
     const elBox = document.getElementById('my-canvas')
     var hammerTime = new Hammer(elBox);
+    hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
     console.log('hammer ready');
-    hammerTime.on('tap', function (ev) {
-        gXy = [ev.center.x, ev.center.x];
-        var pos = getMousePos(gCanvas, gXy);
-        gXy = pos
-        var index = selectTextByCoord(gXy)
-        changeTextIndx(index)
-        gElText.value = getModelText(index)
-        printImgOnCanvas()
-        gIsClicked = true;
-        console.log('pos', pos[0], pos[1])
-        console.log('ev type:',ev.type ,'ev',ev);
-    });
-
-    hammerTime.on('panup pandown panleft panright', function (ev) {
-        let xy = [ev.center.x, ev.center.x];
-        var pos = getMousePos(gCanvas, xy)
-        xy = pos
-        let moveXy = [xy[0] - gXy[0], xy[1] - gXy[1]]
-        if (gIsClicked) {
-            sendCoordsToModel(moveXy)
+    hammerTime.on('pan', function (ev) {
+        ev.preventDefault();
+        // for convience, let's get a reference to our object
+        // DRAG STARTED
+        // here, let's snag the current position
+        // and keep track of the fact that we're dragging
+        if (!isDragging) {
+            var bb = ev.target.getBoundingClientRect()
+            gXy = [ev.center.x -bb.left, ev.center.y-bb.top];
+            var pos = getMousePos(gCanvas, gXy);
+            gXy = pos
+            isDragging = true;
+            lastPosX = pos[0];
+            lastPosY = pos[1];
+            var textPose =[lastPosX,lastPosY]
+            var index = selectTextByCoord(textPose)
+            changeTextIndx(index)
+            gElText.value = getModelText(index)
             printImgOnCanvas()
-            gXy = xy
-            console.log('ev type:',ev.type ,'ev',ev);
+            console.log('pos', pos[0], pos[1])
+            console.log('ev type:', ev.type, 'ev', ev);
+            var posX = ev.deltaX + lastPosX;
+            var posY = ev.deltaY + lastPosY;
+            // move our element to that position
+            let moveXy = [posX, posY]
+                sendCoordsToModel(moveXy)
+                printImgOnCanvas()
         }
-    });
+        // we simply need to determine where the x,y of this
+        // object is relative to where it's "last" known position is
+        // NOTE: 
+        //    deltaX and deltaY are cumulative
+        // Thus we need to always calculate 'real x and y' relative
+        // to the "lastPosX/Y"
 
-}
+        if (ev.isFinal) {
+            isDragging = false;
+        }
+
+        // gXy = [ev.center.x, ev.center.x];
+        // var pos = getMousePos(gCanvas, gXy);
+        // gXy = pos
+    });
+    // poor choice here, but to keep it simple
+    // setting up a few vars to keep track of things.
+
+
+    }
+
+
+
 
