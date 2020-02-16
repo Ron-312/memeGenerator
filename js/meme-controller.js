@@ -424,6 +424,10 @@ function scrollIntoViewTop() {
     document.querySelector('.main-container').scrollIntoView()
 }
 
+function onClickUploadInput(){
+    document.querySelector('.file-input').click()
+}
+
 function onImgInput(ev) {
     loadImageFromInput(ev, resizeCanvas)
 }

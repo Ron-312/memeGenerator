@@ -324,6 +324,15 @@ a:visited {
     font-size: 1rem;
     color: white;
 }
+.modal-inputs .upload-btn{
+    width: 7.5rem;
+    height: 3.75rem;
+    border-radius: 12px;
+    background-color: #ff7f00;
+    box-shadow: none;
+    font-size: 1rem;
+    color: white; 
+}
 
 /* info */
 
@@ -528,3 +537,8 @@ footer p {
     }
 }
 }
+
+
+input[type='file'] {
+    display:none;  
+  }
