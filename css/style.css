@@ -65,6 +65,10 @@ a:visited {
     padding-right: 10px; */
 }
 
+.main-container.disable-dbl-tap-zoom {
+    touch-action: manipulation;
+}
+
 /* helpers */
 
 .flex {
@@ -425,10 +429,14 @@ footer p {
         grid-auto-rows: 40px;
         gap: 20px;
     }
-    .search-keywords{
+    .info .face-img {
+        /* width: 60%;
+        height: 60%; */
+        margin: auto;
+    }
+    .search-keywords {
         width: 97vw;
     }
-    
     .info-container {
         grid-row: span 5;
         grid-column: span 10;
@@ -481,7 +489,8 @@ footer p {
         grid-column: span 9;
     }
 }
-@media (max-width: 615px){
+
+@media (max-width: 615px) {
     .grid img {
         grid-row: span 7;
         grid-column: span 8;
@@ -489,7 +498,7 @@ footer p {
     .grid {
         grid-template-columns: repeat(8, minmax(30px, 300px));
     }
-    .info{
+    .info {
         grid-template-columns: repeat(6, minmax(50px, 300px));
         grid-auto-rows: 30px;
         gap: 15px;

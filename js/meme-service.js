@@ -28,7 +28,6 @@ var gMeme = {
 }
 function createLines(canvas) {
     gMemeCanvas = canvas
-    debugger
     var lines = [
         {
             txt: 'I never eat Falafel',
