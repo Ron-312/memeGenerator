@@ -442,7 +442,7 @@ footer p {
         gap: 10px;
     }
     .info {
-        display: grid;
+        display: flex;
         grid-template-columns: repeat(6, minmax(60px, 300px));
         grid-auto-rows: 40px;
         gap: 20px;

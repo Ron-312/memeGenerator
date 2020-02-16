@@ -378,9 +378,26 @@ function testHammer() {
     hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
     // , threshold: 0
     console.log('hammer ready');
+    hammerTime.on('tap', function (ev) {
+        ev.preventDefault();
+        ev.srcEvent.stopPropagation();
+        if (!isDragging) {
+            gXy = [ev.center.x, ev.center.y];
+            var pos = getMousePos(gCanvas, gXy);
+            gXy = pos
+            isDragging = true;
+            lastPosX = pos[0];
+            lastPosY = pos[1];
+            var textPose = [lastPosX, lastPosY]
+            var index = selectTextByCoord(textPose)
+            changeTextIndx(index)
+            gElText.value = getModelText(index)
+            printImgOnCanvas()
+            isDragging = false
+        }
+    });
 
     hammerTime.on('panstart', function (ev) {
-
         ev.preventDefault();
         ev.srcEvent.stopPropagation();
         if (!isDragging) {
@@ -424,7 +441,7 @@ function scrollIntoViewTop() {
     document.querySelector('.main-container').scrollIntoView()
 }
 
-function onClickUploadInput(){
+function onClickUploadInput() {
     document.querySelector('.file-input').click()
 }
 

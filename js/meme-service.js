@@ -112,7 +112,11 @@ function changeModelText(text, selectedTextIndx) {
 }
 function getModelText(idx) {
     if (idx >= 0) {
-        return gMeme.lines[idx].txt
+        if(!(gMeme.lines[idx].txt === undefined)){
+            return gMeme.lines[idx].txt
+        }else{
+            return "image"
+        }
     }
 }
 function sendCoordsToModel(xy) {
