@@ -1,3 +1,6 @@
+'use strict'
+
+
 // imgs variables
 var gimgsController;
 
@@ -421,5 +424,6 @@ function scrollIntoViewTop() {
     document.querySelector('.main-container').scrollIntoView()
 }
 
-
-
+function onImgInput(ev) {
+    loadImageFromInput(ev, resizeCanvas)
+}

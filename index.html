@@ -22,8 +22,10 @@
         <div class="toggle-menu-screen screen" onclick="onToggleMenu()" alt="toggle main menu"></div>
     </nav>
     <div class="search-bar flex align-center space-between">
-        <input class="search-input" type="text" placeholder="Enter Search Keyword" oninput="onFilter()">
-        <i class="fas fa-search search-img"></i>
+        <div>
+            <input class="search-input" type="text" placeholder="Enter Search Keyword" oninput="onFilter()">
+            <i class="fas fa-search search-img"></i>
+        </div>
         <div class="search-keywords flex align-center space-between">
         </div>
     </div>
@@ -87,7 +89,7 @@
                 <div class="flex align-center justify-center">
                     <!-- <button class="share-btn">Share</button> -->
                     <button class="save-btn" onclick="onSaveMeme()">Save</button>
-
+                    <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
 
                     <form action="" method="POST" enctype="multipart/form-data" onsubmit="uploadImg(this, event)">
                         <input name="img" id="imgData" type="hidden" />

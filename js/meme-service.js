@@ -1,3 +1,4 @@
+'use strict'
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gMemeCanvas;
 
@@ -20,6 +21,19 @@ var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
 { id: 17, url: 'imgs/17.jpg', keywords: ['president', 'you!'] },
 { id: 18, url: 'imgs/18.jpg', keywords: ['you!'] },
 ];
+
+
+
+function addImageToService(img) {
+    let id = gImgs.length +1
+    let imgObj = {
+        id: id,
+        url: img.src,
+        keywords: ['myMeme']
+    }
+    gImgs.push(imgObj)
+    saveCurrImgToService(imgObj)
+}
 
 var gMeme = {
     selectedImgId: 5,
@@ -81,8 +95,13 @@ function getImgsToShow(filterBy) {
 }
 
 function saveCurrImgToService(currImg) {
-    var ImgIndex = (currImg.classList.value)
-    gMeme.selectedImgId = +(ImgIndex.split("-"))[1] - 1
+    if (!currImg.classList) {
+        var ImgIndex = (currImg.id)
+        gMeme.selectedImgId = ImgIndex -1
+    } else {
+        var ImgIndex = (currImg.classList.value)
+        gMeme.selectedImgId = +(ImgIndex.split("-"))[1] - 1
+    }
 }
 function getCurrImgFromService() {
     return gImgs[gMeme.selectedImgId]
@@ -92,14 +111,14 @@ function changeModelText(text, selectedTextIndx) {
     // gMeme.selectedLineIdx = selectedTextIndx
 }
 function getModelText(idx) {
-    if(idx>=0){
+    if (idx >= 0) {
         return gMeme.lines[idx].txt
     }
 }
 function sendCoordsToModel(xy) {
-    if(gMeme.selectedLineIdx>=0){
+    if (gMeme.selectedLineIdx >= 0) {
         let currXy = gMeme.lines[gMeme.selectedLineIdx].xy;
-        currXy[0] =  currXy[0] + xy[0] 
+        currXy[0] = currXy[0] + xy[0]
         currXy[1] = currXy[1] + xy[1]
     }
 }
@@ -111,10 +130,10 @@ function getLines() {
 // ajusting text 
 
 function changeFontSize(num) {
-    if(gMeme.lines[gMeme.selectedLineIdx].fontFamily){
+    if (gMeme.lines[gMeme.selectedLineIdx].fontFamily) {
         gMeme.lines[gMeme.selectedLineIdx].size += num
 
-    }else if(!gMeme.lines[gMeme.selectedLineIdx].fontFamily){
+    } else if (!gMeme.lines[gMeme.selectedLineIdx].fontFamily) {
         gMeme.lines[gMeme.selectedLineIdx].width += num
         gMeme.lines[gMeme.selectedLineIdx].height += num
     }
@@ -124,11 +143,11 @@ function moveText(num) {
 }
 function selectTextByCoord(xy) {
     let selectedTextIndx = gMeme.lines.findIndex((line, idx) => {
-        if(!line.fontFamily){
-            if((xy[1] >= line.xy[1]) && (xy[1] <= (line.xy[1] + line.height)) && (xy[0]>=line.xy[0]) && (xy[0]<=line.xy[0]+line.width)){
+        if (!line.fontFamily) {
+            if ((xy[1] >= line.xy[1]) && (xy[1] <= (line.xy[1] + line.height)) && (xy[0] >= line.xy[0]) && (xy[0] <= line.xy[0] + line.width)) {
                 changeModalTextIndx(idx)
                 return true
-            } 
+            }
             return
         }
         if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 50)) {
@@ -155,7 +174,7 @@ function addEmoji(emojiUrl) {
     let newEmoji = {
         url: emojiUrl,
         width: 40,
-        height:40,
+        height: 40,
         xy: [30, gMemeCanvas.height / 2]
     }
     gMeme.lines.push(newEmoji)
