@@ -16,13 +16,13 @@ var gSelectedTextIndx = 0;
 // touch variables
 var gIsClicked = false;
 var gXy = [];
-var gDeltaForTouch =[0,0]
+var gDeltaForTouch = [0, 0]
 
 function onInit() {
     gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-    
+
     // addEventListeners();
     renderImgs();
     searchKeyWords();
@@ -55,7 +55,7 @@ function openMemeEditor(currImg) {
     createLines(gCanvas);
     saveCurrImgToService(currImg)
     printImgOnCanvas();
-
+    scrollIntoViewTop()
 }
 function printImgOnCanvas() {
     let selectedImgUrl = getCurrImgFromService().url
@@ -329,6 +329,7 @@ function onReturnToGallery() {
     document.querySelector('.info').style.display = 'flex'
     document.querySelector('.savedMemes').style.display = 'none'
     createLines(gCanvas)
+    scrollIntoViewTop()
 }
 function onToggleMenu() {
     document.body.classList.toggle('menu-open');
@@ -351,6 +352,7 @@ function onShowMemeList() {
     document.querySelector('.info').style.display = 'none'
     document.querySelector('.savedMemes').style.display = 'grid'
     showMemeList()
+    scrollIntoViewTop()
 }
 function showMemeList() {
     let elSavedMemes = document.querySelector('.savedMemes')
@@ -373,9 +375,9 @@ function testHammer() {
     hammerTime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
     // , threshold: 0
     console.log('hammer ready');
-   
+
     hammerTime.on('panstart', function (ev) {
-        
+
         ev.preventDefault();
         ev.srcEvent.stopPropagation();
         if (!isDragging) {
@@ -396,16 +398,16 @@ function testHammer() {
         ev.preventDefault();
         ev.srcEvent.stopPropagation();
         // let moveXy = [ev.center.x - gXy[0], ev.center.y - gXy[1]]
-        let moveXy = [ev.deltaX-gDeltaForTouch[0], ev.deltaY-gDeltaForTouch[1]]
+        let moveXy = [ev.deltaX - gDeltaForTouch[0], ev.deltaY - gDeltaForTouch[1]]
         console.log(ev);
-        
+
         sendCoordsToModel(moveXy)
         printImgOnCanvas()
-        gDeltaForTouch =[gDeltaForTouch[0]+moveXy[0],gDeltaForTouch[1]+moveXy[1]]
+        gDeltaForTouch = [gDeltaForTouch[0] + moveXy[0], gDeltaForTouch[1] + moveXy[1]]
     });
 
     hammerTime.on('panend', function (ev) {
-        gDeltaForTouch =[0,0]
+        gDeltaForTouch = [0, 0]
         ev.preventDefault();
         ev.srcEvent.stopPropagation();
         if (ev.isFinal) {
@@ -414,6 +416,10 @@ function testHammer() {
     });
 }
 
+
+function scrollIntoViewTop() {
+    document.querySelector('.main-container').scrollIntoView()
+}
 
 
 
