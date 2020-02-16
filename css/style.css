@@ -51,6 +51,7 @@ a:visited {
     text-decoration: none;
 }
 
+
 /* layout */
 
 .main-container {
@@ -121,6 +122,7 @@ a:visited {
     color: black;
     border-bottom: 4px solid #040a2c;
 }
+.about { text-decoration: none; color:white; }
 
 /* .main-nav .gallery::after{
     content: " \00a0 \00a0 \00a0 \00a0 |";
