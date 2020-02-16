@@ -1,39 +1,9 @@
 'use strict'
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gMemeCanvas;
+var gAllImgsLoaded = 0
 
-var gImgs = [{ id: 1, url: 'imgs/1.jpg', keywords: ['president', 'face'] },
-{ id: 2, url: 'imgs/2.jpg', keywords: ['animals'] },
-{ id: 3, url: 'imgs/3.jpg', keywords: ['animals', 'baby'] },
-{ id: 4, url: 'imgs/4.jpg', keywords: ['animals'] },
-{ id: 5, url: 'imgs/5.jpg', keywords: ['happy', 'baby'] },
-{ id: 6, url: 'imgs/6.jpg', keywords: ['happy'] },
-{ id: 7, url: 'imgs/7.jpg', keywords: ['happy', 'baby'] },
-{ id: 8, url: 'imgs/8.jpg', keywords: ['happy'] },
-{ id: 9, url: 'imgs/9.jpg', keywords: ['happy', 'baby'] },
-{ id: 10, url: 'imgs/10.jpg', keywords: ['happy', 'president'] },
-{ id: 11, url: 'imgs/11.jpg', keywords: ['happy', 'kiss'] },
-{ id: 12, url: 'imgs/12.jpg', keywords: ['you!'] },
-{ id: 13, url: 'imgs/13.jpg', keywords: ['happy', 'you!'] },
-{ id: 14, url: 'imgs/14.jpg', keywords: ['matrix'] },
-{ id: 15, url: 'imgs/15.jpg', keywords: ['happy'] },
-{ id: 16, url: 'imgs/16.jpg', keywords: ['happy', 'you!'] },
-{ id: 17, url: 'imgs/17.jpg', keywords: ['president', 'you!'] },
-{ id: 18, url: 'imgs/18.jpg', keywords: ['you!'] },
-];
-
-
-
-function addImageToService(img) {
-    let id = gImgs.length +1
-    let imgObj = {
-        id: id,
-        url: img.src,
-        keywords: ['myMeme']
-    }
-    gImgs.push(imgObj)
-    saveCurrImgToService(imgObj)
-}
+var gImgs = [];
 
 var gMeme = {
     selectedImgId: 5,
@@ -69,17 +39,85 @@ function changeModalTextIndx(idx) {
     gMeme.selectedLineIdx = idx
 }
 // imgs
+function addImageToService(img) {
+    let id = gImgs.length + 1
+    let imgObj = {
+        id: id,
+        url: img.src,
+        keywords: ['myMeme']
+    }
+    gImgs.push(imgObj)
+    saveCurrImgToService(imgObj)
+}
 
-// function createImgs() {
-//     // TODO: get imgs for gImgs from folder
-//     for (let x = 0; x < 18; x++) {
-//         gImgs.push(createImg())
-//     }
-// }
-// function createImg() {
-//     var img = {}
-// }
-
+function createImgs() {
+    // TODO: get imgs for gImgs from folder
+    for (let i = 0; i < 25; i++) {
+        createImg(i + 1)
+    }
+}
+function createImg(idx) {
+    let keywords = [
+        ['president', 'face'],
+        ['animals'],
+        ['animals', 'baby'],
+        ['animals'],
+        ['happy', 'baby'],
+        ['happy'],
+        ['happy', 'baby'],
+        ['happy'],
+        ['happy', 'baby'],
+        ['happy', 'president'],
+        ['happy', 'kiss'],
+        ['you!'],
+        ['you!', 'happy'],
+        ['matrix'],
+        ['happy'],
+        ['you!', 'happy'],
+        ['president', 'you!'],
+        ['you!'],
+        ['you!'],
+        ['you!'],
+        ['you!'],
+        ['you!'],
+        ['you!'],
+        ['you!'],
+        ['you!']
+    ]
+    let imgObj = {
+        id: idx, url: `imgs/${idx}.jpg`, keywords: keywords[idx - 1]
+    }
+    var img = new Image();
+    img.src = imgObj.url;
+    img.onload = function () {
+        console.log(this.width + 'x' + this.height);
+        let imgWidth = this.width
+        let imgHeight = this.height
+        if (imgWidth / imgHeight > 1.5) {
+            imgObj.positioning = 'horizontal'
+            gAllImgsLoaded++
+        } else if (imgWidth / imgHeight < 0.9) {
+            imgObj.positioning = 'vartical'
+            gAllImgsLoaded++
+        } else {
+            imgObj.positioning = 'square'
+            gAllImgsLoaded++
+        }
+        gImgs.push(imgObj)
+        if (gAllImgsLoaded === 17) {
+            initOnload()
+        }
+    }
+}
+function initOnload(){
+    pushImgsToShow()
+    renderImgs();
+    searchKeyWords();
+}
+function pushImgsToShow() {
+    var res = getImgsToShow()
+    getImgsToShowController(res)
+}
 function getImgsToShow(filterBy) {
     if (!arguments.length) return gImgs
     var res = gImgs.filter(img => {
@@ -97,7 +135,7 @@ function getImgsToShow(filterBy) {
 function saveCurrImgToService(currImg) {
     if (!currImg.classList) {
         var ImgIndex = (currImg.id)
-        gMeme.selectedImgId = ImgIndex -1
+        gMeme.selectedImgId = ImgIndex - 1
     } else {
         var ImgIndex = (currImg.classList.value)
         gMeme.selectedImgId = +(ImgIndex.split("-"))[1] - 1
@@ -112,9 +150,9 @@ function changeModelText(text, selectedTextIndx) {
 }
 function getModelText(idx) {
     if (idx >= 0) {
-        if(!(gMeme.lines[idx].txt === undefined)){
+        if (!(gMeme.lines[idx].txt === undefined)) {
             return gMeme.lines[idx].txt
-        }else{
+        } else {
             return "image"
         }
     }

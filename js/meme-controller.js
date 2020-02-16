@@ -2,7 +2,7 @@
 
 
 // imgs variables
-var gimgsController;
+var gImgsController;
 
 // canvas variables
 var gCanvas;
@@ -21,14 +21,16 @@ var gIsClicked = false;
 var gXy = [];
 var gDeltaForTouch = [0, 0]
 
+function getImgsToShowController(imgs){
+    gImgsController = imgs;
+}
+
 function onInit() {
-    gimgsController = getImgsToShow();
+    createImgs()
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-
     // addEventListeners();
-    renderImgs();
-    searchKeyWords();
+   
     testHammer();
 
     // TODO : addEventListeners() for fluid sensitivity
@@ -36,8 +38,8 @@ function onInit() {
 function renderImgs() {
     let elImgs = document.querySelector('.imgs');
     let strHTMLS = '';
-    gimgsController.forEach((img) => {
-        strHTMLS += `<img class="img img-${img.id}" src="imgs/${img.id}.jpg " alt="" onclick="openMemeEditor(this)"></img>`
+    gImgsController.forEach((img) => {
+        strHTMLS += `<img class="img img-${img.id}- ${img.positioning}" src="imgs/${img.id}.jpg " alt="" onclick="openMemeEditor(this)"></img>`
     });
     elImgs.innerHTML = strHTMLS;
 }
@@ -288,13 +290,13 @@ function onAddEmoji(emojiUrl) {
 
 function onFilter() {
     let filterBy = document.querySelector('.search-input').value
-    gimgsController = getImgsToShow(filterBy)
+    gImgsController = getImgsToShow(filterBy)
     renderImgs()
 }
 function searchKeyWords() {
     var searchKeyWords = [{ keyword: 'happy', numOfTimes: 0 }]
     let newKeyword = ''
-    gimgsController.forEach(img => {
+    gImgsController.forEach(img => {
         img.keywords.forEach(imgKeyword => {
             let isInArr = searchKeyWords.find(keywordObj => {
                 if ((keywordObj.keyword === imgKeyword)) {

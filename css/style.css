@@ -207,6 +207,7 @@ a:visited {
     grid-template-columns: repeat(9, minmax(70px, 400px));
     grid-auto-rows: 30px;
     gap: 20px;
+    grid-auto-flow: dense;
 }
 
 .grid img {
@@ -216,6 +217,14 @@ a:visited {
     grid-row: span 6;
     grid-column: span 3;
     border-radius: 10px;
+}
+ img.horizontal {
+    grid-row: span 5;
+    grid-column: span 5;
+}
+ img.vertical {
+    grid-row: span 2;
+    grid-column: span 6;
 }
 
 /* modal */
@@ -417,9 +426,17 @@ footer p {
     .grid {
         grid-template-columns: repeat(8, minmax(50px, 400px));
     }
-    .grid img {
+    img.square {
         grid-row: span 8;
         grid-column: span 4;
+    }
+    img.horizontal {
+        grid-row: span 5;
+        grid-column: span 5;
+    }
+     img.vertical {
+        grid-row: span 2;
+        grid-column: span 6;
     }
     .search-bar {
         flex-direction: column;
