@@ -22,7 +22,7 @@ function onInit() {
     gimgsController = getImgsToShow();
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
-    createLines(gCanvas);
+    
     // addEventListeners();
     renderImgs();
     searchKeyWords();
@@ -52,6 +52,7 @@ function openMemeEditor(currImg) {
     document.querySelector('.search-bar').style.display = 'none'
     document.querySelector('.info').style.display = 'none'
     resizeCanvas();
+    createLines(gCanvas);
     saveCurrImgToService(currImg)
     printImgOnCanvas();
 
@@ -121,7 +122,7 @@ function drawRect(x, y, isSelected) {
     } else {
         gCtx.fillStyle = 'rgba(182, 182, 182, 0.699)'
     }
-    gCtx.fillRect(0, y - 40, gCanvas.width, 100)
+    gCtx.fillRect(0, y - 40, gCanvas.width, 70)
 }
 
 

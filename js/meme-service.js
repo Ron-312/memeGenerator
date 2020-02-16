@@ -28,13 +28,14 @@ var gMeme = {
 }
 function createLines(canvas) {
     gMemeCanvas = canvas
+    debugger
     var lines = [
         {
             txt: 'I never eat Falafel',
             fontFamily: 'Ariel',
             size: 40,
             align: 'left',
-            color: 'red',
+            color: 'white',
             strokeColor: 'black',
             xy: [30, 70]
         }, {
@@ -42,7 +43,7 @@ function createLines(canvas) {
             fontFamily: 'Ariel',
             size: 40,
             align: 'left',
-            color: 'red',
+            color: 'white',
             strokeColor: 'black',
             xy: [30, canvas.height - 70]
         }];
@@ -131,7 +132,7 @@ function selectTextByCoord(xy) {
             } 
             return
         }
-        if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 100)) {
+        if ((xy[1]) >= (line.xy[1] - 40) && (xy[1]) <= (line.xy[1] + 50)) {
             changeModalTextIndx(idx)
             return true
         }
