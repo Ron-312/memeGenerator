@@ -189,7 +189,7 @@ a:visited {
 
 .savedMemes.grid {
     display: grid;
-    grid-template-columns: repeat(10, minmax(40px, 400px));
+    grid-template-columns: repeat(10, minmax(35px, 400px));
     grid-auto-rows: 30px;
 }
 
@@ -441,6 +441,7 @@ footer p {
         grid-row: span 5;
         grid-column: span 10;
         margin-left: 10px;
+        margin-bottom: 10px;
     }
     .info-container>* {
         align-self: center;
@@ -502,5 +503,19 @@ footer p {
         grid-template-columns: repeat(6, minmax(50px, 300px));
         grid-auto-rows: 30px;
         gap: 15px;
+    }
+
+}
+
+@media (max-width: 490px) {
+    .savedMemes.grid {
+        /* display: grid; */
+        grid-template-columns: repeat(10, minmax(20px, 400px));
+        /* grid-auto-rows: 30px; */
+    }
+    .savedMemes.grid img {
+        /* grid-row: span 8; */
+        grid-column: span 10;
+        /* object-fit: fill; */
     }
 }
