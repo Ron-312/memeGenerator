@@ -220,7 +220,7 @@ a:visited {
 
 .modal {
     display: none;
-    width: 100vw;
+    /* width: 100vw; */
 }
 
 .grid-modal {
@@ -246,7 +246,7 @@ a:visited {
 } */
 
 .modal-inputs {
-    grid-row: span 10;
+    grid-row: span 7;
     grid-column: span 5;
 }
 
@@ -398,7 +398,7 @@ footer p {
         grid-template-columns: repeat(8, minmax(50px, 400px));
     }
     .grid img {
-        grid-row: span 7;
+        grid-row: span 8;
         grid-column: span 4;
     }
     .search-bar {
@@ -478,17 +478,16 @@ footer p {
     .grid-modal {
         display: none;
         grid-template-columns: repeat(10, minmax(20px, 50px));
-        grid-template-rows: repeat(10, 50px);
+        grid-template-rows: repeat(10, minmax(20px, 50px));
         /* grid-auto-rows: 30px; */
         gap: 20px;
     }
     .canvas-container {
         grid-row: span 5;
-        grid-column: 2/9;
+        grid-column: 2/10;
     }
     .modal-inputs {
-        grid-column: span 9;
-    }
+        grid-column: span 10;
 }
 
 @media (max-width: 615px) {
@@ -518,4 +517,5 @@ footer p {
         grid-column: span 10;
         /* object-fit: fill; */
     }
+}
 }
