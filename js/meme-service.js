@@ -2,6 +2,7 @@
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gMemeCanvas;
 var gAllImgsLoaded = 0
+var gNumOfImgs = 25
 
 var gImgs = [];
 
@@ -50,13 +51,13 @@ function addImageToService(img) {
     saveCurrImgToService(imgObj)
 }
 
-function createImgs() {
+function createImgs(cbFunction) {
     // TODO: get imgs for gImgs from folder
-    for (let i = 0; i < 25; i++) {
-        createImg(i + 1)
+    for (let i = 0; i < gNumOfImgs; i++) {
+        createImg(i + 1,cbFunction)
     }
 }
-function createImg(idx) {
+function createImg(idx, cbFunction) {
     let keywords = [
         ['president', 'face'],
         ['animals'],
@@ -104,15 +105,10 @@ function createImg(idx) {
             gAllImgsLoaded++
         }
         gImgs.push(imgObj)
-        if (gAllImgsLoaded === 17) {
-            initOnload()
+        if (gAllImgsLoaded === gNumOfImgs-1) {
+            cbFunction()
         }
     }
-}
-function initOnload(){
-    pushImgsToShow()
-    renderImgs();
-    searchKeyWords();
 }
 function pushImgsToShow() {
     var res = getImgsToShow()

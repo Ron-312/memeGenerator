@@ -26,7 +26,7 @@ function getImgsToShowController(imgs){
 }
 
 function onInit() {
-    createImgs()
+    createImgs(initOnloadImgs)
     gCanvas = document.querySelector('#my-canvas');
     gCtx = gCanvas.getContext('2d');
     // addEventListeners();
@@ -35,6 +35,12 @@ function onInit() {
 
     // TODO : addEventListeners() for fluid sensitivity
 }
+function initOnloadImgs(){
+    pushImgsToShow()
+    renderImgs();
+    searchKeyWords();
+}
+
 function renderImgs() {
     let elImgs = document.querySelector('.imgs');
     let strHTMLS = '';
